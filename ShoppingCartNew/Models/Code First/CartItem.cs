@@ -20,7 +20,14 @@ namespace ShoppingCartNew.Models.Code_First
         {
             get
             {
-                return Count * Item.Price;
+                if (Item.OnSale == true)
+                {
+                    return Count * Item.SalePrice.Value;
+                }
+                else
+                {
+                    return Count * Item.Price;
+                }
             }
         }
     }

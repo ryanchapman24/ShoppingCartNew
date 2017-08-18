@@ -67,16 +67,20 @@
     <header data-offset-top="500" data-stuck="600">
         <!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
         <!--Search Form-->
-        <form class="search-form closed" method="get" role="form" autocomplete="off">
-            <div class="container">
-                <div class="close-search"><i class="icon-delete"></i></div>
-                <div class="form-group">
-                    <label class="sr-only" for="search-hd">Search for product</label>
-                    <input type="text" class="form-control" name="search-hd" id="search-hd" placeholder="Search for product">
-                    <button type="submit"><i class="icon-magnifier"></i></button>
+        @using (Html.BeginForm("SearchResults", "Items", FormMethod.Post, new { id = "logoutForm", @class = "search-form closed" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+            @*<form class="search-form closed" method="get" role="form" autocomplete="off">*@
+                <div class="container">
+                    <div class="close-search"><i class="icon-delete"></i></div>
+                        <div class="form-group">
+                            <label class="sr-only" for="search-hd">Search for product</label>
+                            <input type="text" class="form-control" name="search" id="search-hd" placeholder="Search for product">
+                            <button type="submit"><i class="icon-magnifier"></i></button>
+                        </div>
                 </div>
-            </div>
-        </form>
+            @*</form>*@
+        }
 
         <!--Mobile Menu Toggle-->
         <div class="menu-toggle" style="margin-right: 20px"><i class="fa fa-list"></i></div>
@@ -90,8 +94,9 @@
             <div class="container">
 
                 <ul class="main">
+                    <li class="hide-sm"><a href="@Url.Action("Index", "Home")"><span>H</span>ome</a></li>
                     <li class="has-submenu">
-                        <a href="index.html"><span>H</span>ome<i class="fa fa-chevron-down"></i></a><!--Class "has-submenu" for proper highlighting and dropdown-->
+                        <a href="index.html"><span>O</span>ther<i class="fa fa-chevron-down"></i></a><!--Class "has-submenu" for proper highlighting and dropdown-->
                         <ul class="submenu">
                             <li><a href="index.html">Home - Slideshow</a></li>
                             <li><a href="home-fullscreen.html">Home - Fullscreen Slider</a></li>
@@ -139,7 +144,6 @@
                             <li><a href="cs-page.html">Components &amp; Styles</a></li>
                         </ul>
                     </li>
-                    <li class="hide-sm"><a href="support.html"><span>S</span>upport</a></li>
                 </ul>
 
             </div>
@@ -183,7 +187,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="shop-filters-left-3cols.html">Wallet</a></li>
+                        <li><a href="@Url.Action("Index","Items")">Items</a></li>
                         <li><a href="shop-filters-left-3cols.html">Satchel</a></li>
                         <li><a href="shop-filters-left-3cols.html">Clutch</a></li>
                         <li><a href="shop-filters-left-3cols.html">Hobo bags</a></li>

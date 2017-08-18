@@ -12702,7 +12702,7 @@ header .search-form .close-search:hover {
   -webkit-transition: background 0.25s, color 0.25s;
   -moz-transition: background 0.25s, color 0.25s;
   transition: background 0.25s, color 0.25s;
-  cursor: help;
+  /*cursor: help;*/
 }
 .catalog-single .promo-labels div i {
   font-size: 2em;

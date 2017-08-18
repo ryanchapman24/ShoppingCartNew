@@ -22,6 +22,19 @@ namespace ShoppingCartNew.Models
                 ViewBag.FullName = user.FullName;
 
                 ViewBag.CartItems = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
+                decimal count = 0;
+                foreach (var cartItem in db.CartItems.Where(c => c.CustomerId == user.Id).ToList())
+                {
+                    if (cartItem.Item.OnSale == true)
+                    {
+                        count += cartItem.Item.SalePrice.Value;
+                    }
+                    else
+                    {
+                        count += cartItem.Item.Price;
+                    }
+                }
+                ViewBag.CartItemsTotalCost = count;
 
                 base.OnActionExecuting(filterContext);
             }

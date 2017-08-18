@@ -4,7 +4,69 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<section class="catalog-single">
+    <div class="container">
+        <h2>Are You Sure You Want to Delete This Item?<button class="btn btn-primary pull-right" onclick="javascript:document.getElementById('deleteForm').submit()" style="font-size: 14px">Confirm Delete</button></h2>
+        <hr /><br />
+        <div class="row">
+
+            <!--Product Gallery-->
+            <div class="col-lg-6 col-md-6">
+                <div class="prod-gal master-slider" id="prod-gal">
+                    <!--Slide1-->
+                    <div class="ms-slide">
+                        <img src="@Model.MediaURL" data-src="@Model.MediaURL" alt="Lorem ipsum" />
+                    </div>
+                </div>
+            </div>
+
+            <!--Product Description-->
+            <div class="col-lg-6 col-md-6">
+                <h1>@Model.Name</h1>
+                @if (Model.OnSale == true)
+                {
+                    <div class="old-price">$ @Model.Price</div>
+                    <div class="price">$ @Model.SalePrice</div>
+                }
+                else
+                {
+                    <div class="price">$ @Model.Price</div>
+                }
+                <div class="buttons group">
+                    <div class="qnt-count">
+                        <a class="incr-btn" href="#">-</a>
+                        <input id="quantity" class="form-control" type="text" value="2">
+                        <a class="incr-btn" href="#">+</a>
+                    </div>
+                </div>
+                <p class="p-style2">@Model.Description</p>
+                <div class="row" style="padding: 20px">
+                    <h3>Added to Catalog on: @Model.Created.ToShortDateString()</h3>
+                    @if (Model.Updated.HasValue)
+                    {
+                        <h5>Last Updated: @Model.Updated.Value.ToShortDateString()</h5>
+                    }
+                </div>
+                <div class="promo-labels">
+                    <a href="@Url.Action("Index")"><div><i class="icon-arrow-left"></i>Return to Index</div></a>
+                    <a href="@Url.Action("Edit", new { id = Model.Id})"><div><span><i class="icon-paper-pen"></i>Edit</span></div></a>
+                    <a href="@Url.Action("Details", new { id = Model.Id})"><div><span><i class="icon-magnifier"></i>Details</span></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("Delete", "Items", FormMethod.Post, new { id = "deleteForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+</section>
+
+
+
+
+
+
+@*<h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -60,13 +122,4 @@
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
-</div>
+</div>*@

@@ -206,6 +206,7 @@
     <Compile Include="Models\Code First\OrderItem.cs" />
     <Compile Include="Models\Code First\CartItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImageUploadValidator.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Universal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -594,9 +595,11 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Shared\_TemplateLayout.cshtml" />
+    <Content Include="Views\Items\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ItemImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

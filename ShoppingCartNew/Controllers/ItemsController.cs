@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShoppingCartNew.Models;
 using ShoppingCartNew.Models.Code_First;
+using System.IO;
 
 namespace ShoppingCartNew.Controllers
 {
@@ -17,6 +18,17 @@ namespace ShoppingCartNew.Controllers
         public ActionResult Index()
         {
             return View(db.Items.ToList());
+        }
+
+        // GET: Items/SearchResults
+        public ActionResult SearchResults(string search)
+        {
+            ViewBag.SearchAttempt = search;
+            if (search == "")
+            {
+                return View(db.Items.Where(i => i.Id == 0).ToList());
+            }
+            return View(db.Items.Where(i => i.Name.Contains(search)).ToList());
         }
 
         // GET: Items/Details/5
@@ -47,10 +59,51 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Create([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice")] Item item, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                var iPic = item.MediaURL;
+                var defaultMedia = "/assets/img/catalog/1.png";
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    //var fileName = Path.GetFileName(image.FileName);
+                    //image.SaveAs(Path.Combine(Server.MapPath("~/ProfilePics/"), fileName));
+                    //iPic = "/ProfilePics/" + fileName;
+
+                    //Counter
+                    var num = 0;
+                    //Gets Filename without the extension
+                    var fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                    iPic = Path.Combine("/ItemImages/", fileName + Path.GetExtension(image.FileName));
+                    //Checks if iPic matches any of the current attachments, 
+                    //if so it will loop and add a (number) to the end of the filename
+                    while (db.Items.Any(u => u.MediaURL == iPic))
+                    {
+                        //Sets "filename" back to the default value
+                        fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                        //Add's parentheses after the name with a number ex. filename(4)
+                        fileName = string.Format(fileName + "(" + ++num + ")");
+                        //Makes sure iPic gets updated with the new filename so it could check
+                        iPic = Path.Combine("/ItemImages/", fileName + Path.GetExtension(image.FileName));
+                    }
+                    image.SaveAs(Path.Combine(Server.MapPath("~/ItemImages/"), fileName + Path.GetExtension(image.FileName)));
+                }
+                else
+                {
+                    iPic = defaultMedia;
+                }
+
+                item.MediaURL = iPic;
+                item.Created = System.DateTime.Now;
+                if (item.OnSale == false)
+                {
+                    item.SalePrice = null;
+                }
+                if (item.SalePrice == null)
+                {
+                    item.OnSale = false;
+                }
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,11 +134,59 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice")] Item item, string mediaURL, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
+                db.Items.Attach(item);
+                db.Entry(item).Property("Updated").IsModified = true;
+                db.Entry(item).Property("Name").IsModified = true;
+                db.Entry(item).Property("Price").IsModified = true;
+                db.Entry(item).Property("MediaURL").IsModified = true;
+                db.Entry(item).Property("Description").IsModified = true;
+                db.Entry(item).Property("OnSale").IsModified = true;
+                db.Entry(item).Property("SalePrice").IsModified = true;
+
+                var iPic = item.MediaURL;
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    //var fileName = Path.GetFileName(image.FileName);
+                    //image.SaveAs(Path.Combine(Server.MapPath("~/ProfilePics/"), fileName));
+                    //iPic = "/ProfilePics/" + fileName;
+
+                    //Counter
+                    var num = 0;
+                    //Gets Filename without the extension
+                    var fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                    iPic = Path.Combine("/ItemImages/", fileName + Path.GetExtension(image.FileName));
+                    //Checks if iPic matches any of the current attachments, 
+                    //if so it will loop and add a (number) to the end of the filename
+                    while (db.Items.Any(u => u.MediaURL == iPic))
+                    {
+                        //Sets "filename" back to the default value
+                        fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                        //Add's parentheses after the name with a number ex. filename(4)
+                        fileName = string.Format(fileName + "(" + ++num + ")");
+                        //Makes sure iPic gets updated with the new filename so it could check
+                        iPic = Path.Combine("/ItemImages/", fileName + Path.GetExtension(image.FileName));
+                    }
+                    image.SaveAs(Path.Combine(Server.MapPath("~/ItemImages/"), fileName + Path.GetExtension(image.FileName)));
+                }
+                else
+                {
+                    iPic = mediaURL;
+                }
+
+                item.MediaURL = iPic;
+                item.Updated = System.DateTime.Now;
+                if (item.OnSale == false)
+                {
+                    item.SalePrice = null;
+                }
+                if (item.SalePrice == null)
+                {
+                    item.OnSale = false;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

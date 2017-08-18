@@ -4,38 +4,20 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
+<div style="padding: 40px">
+    <h2>Edit Item</h2>
+    <hr />
+@using (Html.BeginForm("Edit", "Items", new { mediaURL = Model.MediaURL }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Item</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
@@ -43,25 +25,46 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MediaURL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <textarea class="form-control" name="Description" rows="5">@Model.Description</textarea>
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            <label class="col-md-2 control-label">Image</label>
+            <div class="col-md-6">
+                <input name="image" type="file" id="itemImageUpload" style="margin-top: 5px" />
+                <div id="fileDisplay" style="max-width: 180px; padding-top: 10px">
+                </div>
+                @if (Model.MediaURL != null)
+                {
+                    <img id="origImage" src="@Model.MediaURL" style="border: 1px solid #ff9016; margin-top: 15px; max-width: 180px; background-color: white" />
+                }
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0px">
+            <label class="control-label col-md-2">On Sale?</label>
+            <div class="checkbox col-md-10" style="padding-left: 15px">
+                @Html.EditorFor(model => model.OnSale, new { htmlAttributes = new { @id = "sale-checkbox" } })
+                @Html.ValidationMessageFor(model => model.OnSale, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="sale-price" class="form-group">
+            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = new { @id = "sale-price-input", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SalePrice, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -73,10 +76,44 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="pull-right">
+        @Html.ActionLink("Back to Index", "Index")
+    </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var fileInput = document.getElementById('itemImageUpload');
+        var fileDisplayArea = document.getElementById('fileDisplay');
+        var origImage = document.getElementById('origImage');
+
+        //File Reader Function for displaying images
+        fileInput.addEventListener('change', function (e) {
+            var file = fileInput.files[0];
+            var imageType = /image.*/;
+
+            if (file.type.match(imageType)) {
+                var reader = new FileReader();
+
+                origImage.style.display='none'
+                reader.onload = function (e) {
+                    fileDisplayArea.innerHTML = "";
+
+                    // Create a new image.
+                    var img = new Image();
+                    // Set the img src property using the data URL.
+                    img.src = reader.result;
+                    // Add the image to the page.
+                    fileDisplayArea.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            }
+
+            else {
+                fileDisplayArea.innerHTML = "File not supported!";
+            }
+        });
+    </script>
 }

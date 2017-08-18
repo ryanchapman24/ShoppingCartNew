@@ -14,5 +14,7 @@ namespace ShoppingCartNew.Models.Code_First
         public decimal Price { get; set; }
         public string MediaURL { get; set; }
         public string Description { get; set; }
+        public bool OnSale { get; set; }
+        public decimal? SalePrice { get; set; }
     }
 }
