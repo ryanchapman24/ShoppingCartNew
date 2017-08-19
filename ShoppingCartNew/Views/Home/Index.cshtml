@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ShoppingCartNew.Models.Code_First.Item>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -12,17 +14,17 @@
             <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/fashion-model-blonde-city-street-wallpaper-1.jpg" alt="" />
             <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Jackets</h2>
             <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad">Check out our extensive collection of men and women's modern jackets for urban or city life. </p>
-            <div style="left: 110px; top: 300px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items")">Go to catalog</a></div>
+            <div style="left: 110px; top: 300px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 1 })">Go to catalog</a></div>
             @*<div style="left: 350px; top: 300px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
         </div>
 
         <!--Slide 2-->
         <div class="ms-slide" data-delay="7">
             <span class="overlay"></span>
-            <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/men-with-watch3.jpg" alt="Necessaire" />
-            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Watches</h2>
-            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">Our watches are always of the highest quality. The watch game has evolved. You should too. Get with the times. See what I did there? </p>
-            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items")">Go to catalog</a></div>
+            <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/mvmt-watches.jpg" alt="Necessaire" />
+            <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Watches</h2>
+            <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">Our watches are always of the highest quality. The watch game has evolved. You should too. Get with the times. See what I did there? </p>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 2 })">Go to catalog</a></div>
             @*<div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
         </div>
 
@@ -32,7 +34,7 @@
             <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/black-men-standing-in-the-rain-waiting-for-taxi-london-street-photo.jpg" alt="Crescent" />
             <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Hats</h2>
             <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">A cool hat is all about expressing yourself with whatever flavor that represents your unique style. Upgrade your wardrobe today! </p>
-            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items")">Go to catalog</a></div>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 3 })">Go to catalog</a></div>
             @*<div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
         </div>
 
@@ -48,15 +50,15 @@
             {
                 <!--Category-->
                 <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                    <a href="@Url.Action("Index", "Items", new { tId = item.Id})">
-                        <img src="~/assets/img/categories/1.png" alt="1" />
-                        <p>@item.TypeName</p>
+                    <a href="@Url.Action("Index", "Items", new { tId = item.Id})" style="padding-bottom:10px">
+                        @*<img src="~/assets/img/categories/1.png" alt="1" />*@
+                        <p style="font-size: 26px;color: white; background-color: #b2b2b2">@item.TypeName</p>
                     </a>
                 </div>
             }           
         </div>
     </div>
-</section><!--Categories Close-->
+</section><!--Categories Close--><hr />
 
 <!--Catalog Grid-->
 <section class="catalog-grid">
@@ -123,234 +125,41 @@
     </div>
 </section><!--Catalog Grid Close-->
 
-<!--Tabs Widget-->
-<section class="tabs-widget">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#bestsel" data-toggle="tab">Bestseller items</a></li>
-        <li><a href="#onsale" data-toggle="tab">Items on sale</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade in active" id="bestsel">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-7 col-sm-7">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/1.jpg" alt="1" />
-                        </a>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$19.40</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/2.jpg" alt="2" />
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/3.jpg" alt="3" />
-                        </a>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/4.jpg" alt="4" />
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/5.jpg" alt="5" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="onsale">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/6.jpg" alt="1" />
-                        </a>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$19.40</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/6.jpg" alt="2" />
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/6.jpg" alt="3" />
-                        </a>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <a class="media-link" href="#">
-                            <div class="overlay">
-                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                            </div>
-                            <img src="~/assets/img/media/6.jpg" alt="4" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--Tabs Widget Close-->
-
-<!--Posts/Twitter Widget-->
+<!--Look Book Banner-->
 <section class="posts-widget">
-    <div class="tw-bg"></div>
+    <div class="tw-bg" style="background: #ff9016"></div>
     <div class="container">
         <div class="row">
-            <div class="latest-posts col-lg-8 col-md-8">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="extra-bold">Latests posts</h2>
-                        <a class="btn btn-black btn-block" href="#">To blog</a>
-                    </div>
-                    <div class="col-lg-9">
-                        <!--Post-->
-                        <div class="post row">
-                            <div class="col-lg-6 col-sm-6">
-                                <a href="#"><img src="~/assets/img/posts-widget/1.jpg" alt="1" /></a>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <h3><a href="#">An interesting post</a></h3>
-                                <p>Write a blog to share with customers interesting facts about your products. Make them curious and you'll get co-operation. Just try it!</p>
-                                <div class="author"><i class="fa fa-user"></i><a href="#">By Resoursa</a></div>
-                                <div class="comments"><i class="fa fa-comment"></i><a href="#">Comments (34)</a></div>
-                            </div>
-                        </div><!--Post End-->
-                        <!--Post-->
-                        <div class="post row">
-                            <div class="col-lg-6 col-sm-6">
-                                <a href="#"><img src="~/assets/img/posts-widget/1.jpg" alt="2" /></a>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <h3><a href="#">Review post</a></h3>
-                                <p>You probably know that giving more details is the best way to provide info about a product. Write reviews, take high-quality pictures, and that will definitely boost the sales.</p>
-                                <div class="author"><i class="fa fa-user"></i><a href="#">By Jeddah</a></div>
-                                <div class="comments"><i class="fa fa-comment"></i><a href="#">Comments (101)</a></div>
-                            </div>
-                        </div><!--Post End-->
-                    </div>
-                </div>
-            </div>
-            <div class="twitter-feed col-lg-4 col-md-4">
-                <a class="tw-follow" href="https://twitter.com/8Guild" target="_blank">
-                    <div class="button">Follow us<i class="fa fa-twitter"></i></div>
-                    <h2 class="extra-bold">On Twitter <i class="fa fa-twitter"></i></h2>
-                </a>
-                <!--Tweet-->
-                <div class="tweet">
-                    <a href="#"></a>
-                    <p class="p-style3">Uberly impressed with the AMAZING support I constantly get from awesome!!!</p>
-                    <div class="group">
-                        <div class="actions">
-                            <a href="#">Reply</a>
-                            <a href="#">Retweet</a>
-                            <a href="#">Favorite</a>
-                        </div>
-                        <span class="date">5 Mar 2014</span>
-                    </div>
-                </div><!--Tweet Close-->
-                <!--Tweet-->
-                <div class="tweet">
-                    <a href="#"></a>
-                    <p class="p-style3">Uberly impressed with the AMAZING support I constantly get from awesome!!!</p>
-                    <div class="group">
-                        <div class="actions">
-                            <a href="#">Reply</a>
-                            <a href="#">Retweet</a>
-                            <a href="#">Favorite</a>
-                        </div>
-                        <span class="date">5 Mar 2014</span>
-                    </div>
-                </div><!--Tweet Close-->
+            <div class="latest-posts col-lg-12 col-md-12" style="padding-top: 30px;padding-bottom: 30px; text-align: center">
+                <h1 style="margin-top: 0px;margin-bottom:0px;color: white"><i class="fa fa-arrow-circle-down"></i><span style="padding-left: 40px;padding-right:40px">Look Book</span><i class="fa fa-arrow-circle-down"></i></h1>
             </div>
         </div>
     </div>
-</section><!--Posts/Twitter Close-->
+</section><!--Look Book Banner-->
 
 <!--Gallery Widget-->
 <section class="white-bg gallery-widget">
     <div class="container">
-        <h2>Product gallery</h2>
+        <h2>Product Gallery</h2>
         <div class="filters">
             <a class="active" href="#" data-group="all">All</a>
-            <a href="#" data-group="City bags">City bags</a>
-            <a href="#" data-group="Gloves">Gloves</a>
-            <a href="#" data-group="Belts">Belts</a>
-            <a href="#" data-group="video">Clutch</a>
+            @foreach (var item in @ViewBag.ItemTypes)
+            {
+                <a href="#" data-group="@item.TypeName">@item.TypeName</a>
+            }
         </div>
         <div class="gallery-grid">
-            <!--Item-->
-            <div class="gallery-item" data-groups='["City bags"]' data-src="~/assets/img/gallery-widget/1.jpg">
-                <a href="img/gallery-widget/1.jpg">
-                    <div class="overlay"><span><i class="icon-expand"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/1.jpg" alt="1" />
-                </a>
-            </div>
-            <!--Item-->
-            <div class="gallery-item" data-groups='["City bags"]' data-src="~/assets/img/gallery-widget/2.jpg">
-                <a href="img/gallery-widget/2.jpg">
-                    <div class="overlay"><span><i class="icon-expand"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/2.jpg" alt="2" />
-                </a>
-            </div>
-            <!--Item-->
-            <div class="gallery-item" data-groups='["video"]' data-src="https://www.youtube.com/watch?v=AZ3AVR7VnqA">
-                <a href="https://www.youtube.com/watch?v=hdEAWW7tZSA">
-                    <div class="overlay"><span><i class="icon-music-play"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/5.jpg" alt="3" />
-                </a>
-            </div>
-            <!--Item-->
-            <div class="gallery-item" data-groups='["Belts"]' data-src="~/assets/img/gallery-widget/4.jpg">
-                <a href="img/gallery-widget/4.jpg">
-                    <div class="overlay"><span><i class="icon-expand"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/4.jpg" alt="4" />
-                </a>
-            </div>
-            <!--Item-->
-            <div class="gallery-item" data-groups='["Gloves"]' data-src="~/assets/img/gallery-widget/5.jpg">
-                <a href="img/gallery-widget/5.jpg">
-                    <div class="overlay"><span><i class="icon-expand"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/5.jpg" alt="5" />
-                </a>
-            </div>
-            <!--Item-->
-            <div class="gallery-item" data-groups='["Gloves"]' data-src="~/assets/img/gallery-widget/5.jpg">
-                <a href="~/assets/img/gallery-widget/5.jpg">
-                    <div class="overlay"><span><i class="icon-expand"></i></span></div>
-                    <img src="~/assets/img/gallery-widget/5.jpg" alt="6" />
-                </a>
-            </div>
+            @foreach(var item in Model)
+            {
+
+                <!--Item-->
+                <div class="gallery-item" data-groups='["@item.ItemType.TypeName"]' data-src="@item.MediaURL">
+                    <a href="@item.MediaURL">
+                        <div class="overlay"><span><i class="icon-expand"></i></span></div>
+                        <img src="@item.MediaURL" alt="1" />
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </section><!--Gallery Widget Close-->
@@ -358,15 +167,15 @@
 <!--Brands Carousel Widget-->
 <section class="brand-carousel">
     <div class="container">
-        <h2>Brands in our shop</h2>
+        <h2>Brands in Our Shop</h2>
         <div class="inner">
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
-            <a class="item" href="#"><img src="~/assets/img/brands/1.png" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/vans_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/crooks_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/nike_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/mvmt_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/stance_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/adidas_logo.jpg" alt="1" /></a>
+            <a class="item" href="#"><img src="~/assets/img/brands/kobe_logo.jpg" alt="1" /></a>
         </div>
     </div>
 </section><!--Brands Carousel Close-->

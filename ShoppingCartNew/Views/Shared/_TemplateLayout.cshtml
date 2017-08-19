@@ -16,6 +16,7 @@
     <link href="~/assets/masterslider/style/masterslider.css" rel="stylesheet" media="screen">
     <!--Styles-->
     <link href="~/assets/css/styles.css" rel="stylesheet" media="screen">
+    <link href="~/Content/animate.css" rel="stylesheet" media="screen">
 
     <!--Modernizr-->
     <script src="~/assets/js/libs/modernizr.custom.js"></script>
@@ -84,7 +85,7 @@
         <div class="menu-toggle" style="margin-right: 20px"><i class="fa fa-list"></i></div>
 
         <div class="container hidden-xs">
-            <a class="logo" href="@Url.Action("Index","Home")"><img src="~/assets/img/orange_logo.png" style="transform: rotate(-100deg); margin-top: -20px; position: absolute" alt="EVOLVE" /></a>
+            <a class="logo animated fadeInDown" href="@Url.Action("Index","Home")"><img src="~/assets/img/orange_logo.png" style="transform: rotate(-100deg); margin-top: -20px; position: absolute" alt="EVOLVE" /></a>
         </div>
 
         <!--Main Menu-->
@@ -117,9 +118,9 @@
                                 var priceDiff = ViewBag.BiggestSale.Price - ViewBag.BiggestSale.SalePrice;
                                 var percentOff = Math.Round((priceDiff / ViewBag.BiggestSale.Price) * 100);
 
-                                <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })">Bargain<i class="fa fa-chevron-down"></i></a>
+                                <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })">BARGAIN<i class="fa fa-chevron-down"></i></a>
                                 <ul class="submenu">
-                                    <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px">@percentOff<span style="font-size: 40px">%</span> <span style="font-size: 45px"><br />Off!</span></h1></li>
+                                    <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px"> @percentOff <span style="font-size: 40px">% </span> <span style="font-size: 45px"><br />Off!</span></h1></li>
                                     @*<li><a href="#">Wristlet</a></li>
                                     <li class="has-submenu">
                                         <a href="#">Backpack</a>
@@ -156,20 +157,24 @@
                                             @using (Html.BeginForm("Create", "CartItems", new { id = ViewBag.BiggestSale.Id }, FormMethod.Post))
                                             {
                                                 @Html.AntiForgeryToken()
-                                                <input type="submit" class="btn btn-primary" style="font-size: 14px" value="Add to Cart" />
+                                                <input type="submit" class="btn btn-primary" style="font-size: 14px; margin-top:-5px" value="Add to Cart" />
                                             }
                                         </div>
                                         <div class="col-2">
                                             <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
                                         </div>
+                                        <div class="col-2">
+                                            <button class="btn btn-primary pull-right" onclick='location.href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"' style="font-size:14px; margin-right:-40px">View Product</button><br /><br /><br />
+                                            <p class="pull-right" style="margin-right: -25px; font-size: 14px">$ @ViewBag.BiggestSale.SalePrice</p>
+                                        </div>
                                     </li>
                                 </ul>
                             }
                         </li>
-                        <li><a href="@Url.Action("Index","Items")">Catalog</a></li>
+                        <li><a href="@Url.Action("Index","Items")">CATALOG</a></li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li><a href="@Url.Action("Index","CartItems")">Cart</a></li>
+                            <li><a href="@Url.Action("Index","CartItems")">CART</a></li>
                         }
                         @*<li><a href="shop-filters-left-3cols.html">Clutch</a></li>
                         <li><a href="shop-filters-left-3cols.html">Hobo bags</a></li>

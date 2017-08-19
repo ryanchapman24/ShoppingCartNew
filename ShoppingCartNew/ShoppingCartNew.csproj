@@ -232,6 +232,13 @@
     <Content Include="assets\img\arrow-down.png" />
     <Content Include="assets\img\blog\blog_01.png" />
     <Content Include="assets\img\brands\1.png" />
+    <Content Include="assets\img\brands\adidas_logo.jpg" />
+    <Content Include="assets\img\brands\crooks_logo.jpg" />
+    <Content Include="assets\img\brands\kobe_logo.jpg" />
+    <Content Include="assets\img\brands\mvmt_logo.jpg" />
+    <Content Include="assets\img\brands\nike_logo.jpg" />
+    <Content Include="assets\img\brands\stance_logo.jpg" />
+    <Content Include="assets\img\brands\vans_logo.jpg" />
     <Content Include="assets\img\catalog\1.png" />
     <Content Include="assets\img\catalog\product-gallery\1.jpg" />
     <Content Include="assets\img\catalog\product-gallery\th_1.jpg" />
@@ -264,6 +271,7 @@
     <Content Include="assets\img\hero\slideshow\black-men-standing-in-the-rain-waiting-for-taxi-london-street-photo.jpg" />
     <Content Include="assets\img\hero\slideshow\fashion-model-blonde-city-street-wallpaper-1.jpg" />
     <Content Include="assets\img\hero\slideshow\men-with-watch3.jpg" />
+    <Content Include="assets\img\hero\slideshow\mvmt-watches.jpg" />
     <Content Include="assets\img\hero\slideshow\slide_1.jpg" />
     <Content Include="assets\img\hero\slideshow\slide_2.jpg" />
     <Content Include="assets\img\info-blocks\1.jpg" />
@@ -376,6 +384,8 @@
     <Content Include="assets\masterslider\style\loading-2.gif" />
     <Content Include="assets\masterslider\style\masterslider.css" />
     <Content Include="assets\masterslider\style\video-close-btn.png" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />

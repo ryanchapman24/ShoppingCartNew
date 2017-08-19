@@ -11,7 +11,7 @@ namespace ShoppingCartNew.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(db.Items.ToList());
         }
 
         public ActionResult About()
