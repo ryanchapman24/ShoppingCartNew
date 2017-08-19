@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ShoppingCartNew.Models.Code_First
 {
@@ -13,8 +14,27 @@ namespace ShoppingCartNew.Models.Code_First
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string MediaURL { get; set; }
+        [AllowHtml]
         public string Description { get; set; }
         public bool OnSale { get; set; }
         public decimal? SalePrice { get; set; }
+        public int ItemTypeId { get; set; }
+
+        public virtual ItemType ItemType { get; set; }
+
+        public decimal? SalePercent
+        {
+            get
+            {
+                if (OnSale == true)
+                {
+                    return SalePrice / Price;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

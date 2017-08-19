@@ -67,19 +67,17 @@
     <header data-offset-top="500" data-stuck="600">
         <!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
         <!--Search Form-->
-        @using (Html.BeginForm("SearchResults", "Items", FormMethod.Post, new { id = "logoutForm", @class = "search-form closed" }))
+        @using (Html.BeginForm("SearchResults", "Items", FormMethod.Post, new { @class = "search-form closed" }))
         {
-            @*@Html.AntiForgeryToken()*@
-            @*<form class="search-form closed" method="get" role="form" autocomplete="off">*@
-                <div class="container">
-                    <div class="close-search"><i class="icon-delete"></i></div>
-                        <div class="form-group">
-                            <label class="sr-only" for="search-hd">Search for product</label>
-                            <input type="text" class="form-control" name="search" id="search-hd" placeholder="Search for product">
-                            <button type="submit"><i class="icon-magnifier"></i></button>
-                        </div>
-                </div>
-            @*</form>*@
+            @Html.AntiForgeryToken()
+            <div class="container">
+                <div class="close-search"><i class="icon-delete"></i></div>
+                    <div class="form-group">
+                        <label class="sr-only" for="search-hd">Search for product</label>
+                        <input type="text" class="form-control" name="search" id="search-hd" placeholder="Search for product">
+                        <button type="submit"><i class="icon-magnifier"></i></button>
+                    </div>
+            </div>
         }
 
         <!--Mobile Menu Toggle-->
@@ -92,11 +90,10 @@
         <!--Main Menu-->
         <nav class="menu">
             <div class="container">
-
                 <ul class="main">
                     <li class="hide-sm"><a href="@Url.Action("Index", "Home")"><span>H</span>ome</a></li>
                     <li class="has-submenu">
-                        <a href="index.html"><span>O</span>ther<i class="fa fa-chevron-down"></i></a><!--Class "has-submenu" for proper highlighting and dropdown-->
+                        <a href="index.html"><span>A</span>bout<i class="fa fa-chevron-down"></i></a><!--Class "has-submenu" for proper highlighting and dropdown-->
                         <ul class="submenu">
                             <li><a href="index.html">Home - Slideshow</a></li>
                             <li><a href="home-fullscreen.html">Home - Fullscreen Slider</a></li>
@@ -106,92 +103,77 @@
                         </ul>
                     </li>
                     <li class="has-submenu">
-                        <a href="shop-filters-left-3cols.html"><span>S</span>hop<i class="fa fa-chevron-down"></i></a>
-                        <ul class="submenu">
-                            <li><a href="shop-filters-left-3cols.html">Shop - Filters Left 3 Cols</a></li>
-                            <li><a href="shop-filters-left-2cols.html">Shop - Filters Left 2 Cols</a></li>
-                            <li><a href="shop-filters-right-3cols.html">Shop - Filters Right 3 Cols</a></li>
-                            <li><a href="shop-filters-right-2cols.html">Shop - Filters Right 2 Cols</a></li>
-                            <li><a href="shop-no-filters-4cols.html">Shop - No Filters 4 Cols</a></li>
-                            <li><a href="shop-no-filters-3cols.html">Shop - No Filters 3 Cols</a></li>
-                            <li><a href="shop-single-item-v1.html">Shop - Single Item Vers 1</a></li>
-                            <li><a href="shop-single-item-v2.html">Shop - Single Item Vers 2</a></li>
-                            <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                            <li><a href="checkout.html">Checkout Page</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="blog-sidebar-right.html"><span>B</span>log<i class="fa fa-chevron-down"></i></a>
-                        <ul class="submenu">
-                            <li><a href="blog-sidebar-left.html">Blog - Sidebar Left</a></li>
-                            <li><a href="blog-sidebar-right.html">Blog - Sidebar Right</a></li>
-                            <li><a href="blog-single.html">Blog - Single Post</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#"><span>P</span>ages<i class="fa fa-chevron-down"></i></a>
-                        <ul class="submenu">
-                            <li><a href="register.html">Login / Registration</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                            <li><a href="404.html">404 Page</a></li>
-                            <li><a href="support.html">Support Page</a></li>
-                            <li><a href="delivery.html">Delivery</a></li>
-                            <li><a href="history.html">History Page</a></li>
-                            <li><a href="tracking.html">Tracking Page</a></li>
-                            <li><a href="cs-page.html">Components &amp; Styles</a></li>
-                        </ul>
+                        <a id="contactScroll" href="#"><span>C</span>ontact<i class="fa fa-chevron-down"></i></a>
                     </li>
                 </ul>
-
             </div>
 
             <div class="catalog-block">
                 <div class="container">
-                    <ul class="catalog">
+                    <ul class="catalog" style="text-align:left">
                         <li class="has-submenu">
-                            <a href="shop-filters-left-3cols.html">Handbag<i class="fa fa-chevron-down"></i></a>
-                            <ul class="submenu">
-                                <li><a href="#">Wristlet</a></li>
-                                <li class="has-submenu">
-                                    <a href="#">Backpack</a><!--Class "has-submenu" for adding carret and dropdown-->
-                                    <ul class="sub-submenu">
-                                        <li><a href="#">KATA</a></li>
-                                        <li><a href="#">Think Tank</a></li>
-                                        <li><a href="#">Manfrotto</a></li>
-                                        <li><a href="#">Lowepro</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Hat box</a></li>
-                                <li class="has-submenu">
-                                    <a href="#">Clutch</a>
-                                    <ul class="sub-submenu">
-                                        <li><a href="#">Louis Vuitton</a></li>
-                                        <li><a href="#">Chanel</a></li>
-                                        <li><a href="#">Christian Dior</a></li>
-                                        <li><a href="#">Gucci</a></li>
-                                        <li><a href="#">Neri Karra</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Envelope</a></li>
-                                <li class="offer">
-                                    <div class="col-1">
-                                        <p class="p-style2">Use product images on the menu. It's easier to percept a visual content than a textual one. </p>
-                                    </div>
-                                    <div class="col-2">
-                                        <img src="~/assets/img/offers/menu-drodown-offer.jpg" alt="Special Offer" />
-                                        <a class="btn btn-black" href="#"><span>584$</span>Special offer</a>
-                                    </div>
-                                </li>
-                            </ul>
+                            @if (ViewBag.BiggestSale != null)
+                                {
+                                var priceDiff = ViewBag.BiggestSale.Price - ViewBag.BiggestSale.SalePrice;
+                                var percentOff = Math.Round((priceDiff / ViewBag.BiggestSale.Price) * 100);
+
+                                <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })">Bargain<i class="fa fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px">@percentOff<span style="font-size: 40px">%</span> <span style="font-size: 45px"><br />Off!</span></h1></li>
+                                    @*<li><a href="#">Wristlet</a></li>
+                                    <li class="has-submenu">
+                                        <a href="#">Backpack</a>
+                                        <ul class="sub-submenu">
+                                            <li><a href="#">KATA</a></li>
+                                            <li><a href="#">Think Tank</a></li>
+                                            <li><a href="#">Manfrotto</a></li>
+                                            <li><a href="#">Lowepro</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Hat box</a></li>
+                                    <li class="has-submenu">
+                                        <a href="#">Clutch</a>
+                                        <ul class="sub-submenu">
+                                            <li><a href="#">Louis Vuitton</a></li>
+                                            <li><a href="#">Chanel</a></li>
+                                            <li><a href="#">Christian Dior</a></li>
+                                            <li><a href="#">Gucci</a></li>
+                                            <li><a href="#">Neri Karra</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Envelope</a></li>*@
+                                    <li class="offer">
+                                        <div class="col-1">
+                                            <h3 style="margin-top: 0px; margin-bottom: 0px">Description</h3><hr style="margin-bottom: 0px"/><br />
+                                                @if (ViewBag.BiggestSale.Description.Length > 100)
+                                                { 
+                                                    @Html.Raw(ViewBag.BiggestSale.Description.Substring(0, 100) + "... ")<br /><br />
+                                                }
+                                                else
+                                                {
+                                                    @Html.Raw(ViewBag.BiggestSale.Description)<br /><br />
+                                                }
+                                            @using (Html.BeginForm("Create", "CartItems", new { id = ViewBag.BiggestSale.Id }, FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="submit" class="btn btn-primary" style="font-size: 14px" value="Add to Cart" />
+                                            }
+                                        </div>
+                                        <div class="col-2">
+                                            <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            }
                         </li>
-                        <li><a href="@Url.Action("Index","Items")">Items</a></li>
-                        <li><a href="shop-filters-left-3cols.html">Satchel</a></li>
-                        <li><a href="shop-filters-left-3cols.html">Clutch</a></li>
+                        <li><a href="@Url.Action("Index","Items")">Catalog</a></li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li><a href="@Url.Action("Index","CartItems")">Cart</a></li>
+                        }
+                        @*<li><a href="shop-filters-left-3cols.html">Clutch</a></li>
                         <li><a href="shop-filters-left-3cols.html">Hobo bags</a></li>
-                        <li><a href="shop-filters-left-3cols.html">Shoulder Bag</a></li>
+                        <li><a href="shop-filters-left-3cols.html">Shoulder Bag</a></li>*@
                     </ul>
                 </div>
             </div>
@@ -252,7 +234,7 @@
                     <p class="p-style2">Please fill the field before continuing</p>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-1">
-                    <p class="p-style3">Get more followers. In case of high quality newsletters the customers return rate can increase up to 20%! Have you already estimated your possible income? We took that into account and created a decent subscription form. </p>
+                    <p class="p-style3">Get email notifications every time we drop new merch on the site or when any of our items go on sale!</p>
                 </div>
             </div>
         </div>
@@ -264,7 +246,7 @@
                 <div class="col-lg-5 col-md-5 col-sm-5">
                     <div class="info">
                         <a class="logo text-nowrap" href="@Url.Action("Index","Home")" style="text-align: center"><h1><b style="color: black; font-size: 85px">E</b> <span  style="font-size: 65px">V O L V E</span></h1></a>
-                        <p>Describe the mission of your online store and the advantages a customer can get once he makes a purchase. If you have something to tell let customers know about it.</p>
+                        <p>ECommerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
                         <div class="social">
                             <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
@@ -276,29 +258,40 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
-                    <h2>Latest news</h2>
+                    <h2>Latest items</h2>
                     <ul class="list-unstyled">
-                        <li>25 of May <a href="#">new arrivals in Spring</a></li>
-                        <li>24 of April <a href="#">5 facts about clutches</a></li>
-                        <li>25 of May <a href="#">new arrivals in Spring</a></li>
-                        <li>24 of April <a href="#">5 facts about clutches</a></li>
+                        @{
+                            int lItems = 0;
+                            foreach (var item in ViewBag.Latest)
+                            {
+                                <li>@item.Created.ToString("MMMM"), @item.Created.Day <a href="@Url.Action("Details","Items", new { id = item.Id })" style="margin-left: 10px">@item.Name</a></li>
+                                lItems++;
+                                if (lItems == 7) { break; }
+                            }
+                        }
                     </ul>
                 </div>
-                <div class="contacts col-lg-3 col-md-3 col-sm-3">
-                    <h2>Contacts</h2>
+                <div id="contactDest" class="contacts col-lg-3 col-md-3 col-sm-3">
+                    <h2>Contact</h2>
                     <p class="p-style3">
-                        4120 Lenox Avenue, New York, NY,<br />
-                        10035 76 Saint Nicholas Avenue<br />
-                        <a href="mailto:mail@Limo.com">mail@Limo.com</a><br />
-                        +48 543765234<br />
-                        +48 555 234 54 34<br />
+                        <b>TRIAD CAMPUS</b><br />
+                        1231 Shields Rd., Suite 5<br />
+                        Kernersville, NC 27284<br />
+
+                        <b>CHARLOTTE CAMPUS</b><br />
+                        8430 University Park Dr., Suite 650<br />
+                        Charlotte, NC 28262<br />
+
+                        <b>NEW YORK CAMPUS</b><br />
+                        33 Irving Place<br />
+                        New York, NY 10003<br />
                     </p>
                 </div>
             </div>
             <div class="copyright">
                 <div class="row">
                     <div class="col-lg-7 col-md-7 col-sm-7">
-                        <p>&copy; 2014 Limo. All Rights Reserved. Designed by <a href="http://8guild.com/" target="_blank">8Guild</a></p>
+                        <p>&copy; E V O L V E. All Rights Reserved. Designed by <a href="http://coderfoundry.com/ryanchapman" target="_blank">Ryan Chapman</a></p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">
@@ -329,9 +322,17 @@
     <script src="~/assets/js/plugins/owl.carousel.min.js"></script>
     <script src="~/assets/js/plugins/masterslider.min.js"></script>
     <script src="~/assets/js/scripts.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
     @RenderSection("scripts", required: false)
-
-
-
+    <script>
+        $(document).ready(function () {
+            $("#contactScroll").click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#contactDest").offset().top
+                }, 2000);
+            })
+        });
+    </script>
 </body><!--Body Close-->
 </html>

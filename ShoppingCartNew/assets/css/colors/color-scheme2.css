@@ -299,7 +299,7 @@ a:hover {
 }
 .shopping-cart table td.delete i,
 .wishlist table td.delete i {
-  color: #ff5722;
+    color: #ff9016;
 }
 .shopping-cart table td.qnt-count .incr-btn,
 .wishlist table td.qnt-count .incr-btn {

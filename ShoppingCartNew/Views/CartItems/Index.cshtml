@@ -2,50 +2,145 @@
 
 @{
     ViewBag.Title = "Index";
+    var shipping = ViewBag.CartItemsTotalCost / 10;
+    var taxes = ViewBag.CartItemsTotalCost / 20;
+    var total = ViewBag.CartItemsTotalCost + shipping + taxes;
 }
 
-<h2>Index</h2>
+<section class="shopping-cart">
+    <div class="container">
+        <div class="row">
+            <!--Items List-->
+            <div class="col-lg-9 col-md-9">
+                @if (ViewBag.CartItemsTotalCost > 0)
+                {
+                    <h2 class="title">Shopping Cart</h2>
+                }
+                else
+                {
+                    <h2 class="title">Shopping Cart is Empty!</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th></th>
-    </tr>
+                }
+                <hr />
+                <table class="items-list">
+                    @if (ViewBag.CartItemsTotalCost > 0)
+                    {
+                        <tr>
+                            <th></th>
+                            <th>Product Name</th>
+                            <th>Price Per</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    }
+                    <!--Item-->
+                    @foreach (var item in Model)
+                    {
+                        <!--Item-->
+                        <tr class="item">
+                            <td class="thumb"><a href="@Url.Action("Details", "Items", new { id = item.Item.Id })"><img src="@item.Item.MediaURL" alt="Lorem ipsum" /></a></td>
+                            <td class="name"><a href="@Url.Action("Details", "Items", new { id = item.Item.Id })"><span style="margin-left: 20px">@item.Item.Name</span></a></td>
+                            @if (item.Item.OnSale == true)
+                            {
+                                <td class="price"><span style="color:#ff9016; font-size: 12px">SALE</span><br />$ @item.Item.SalePrice</td>
+                            }
+                            else
+                            {
+                                <td class="price">$ @item.Item.Price</td>
+                            }
+                            <td class="qnt-count">
+                                <a class="incr-btn" href="#">-</a>
+                                <input class="quantity form-control" type="text" value="@item.Count">
+                                <a class="incr-btn" href="#">+</a>
+                            </td>
+                            @if (item.Item.OnSale == true)
+                            {
+                                <td class="total"><span style="color:#ff9016; font-size: 12px">SALE</span><br />$ @item.UnitTotal</td>
+                            }
+                            else
+                            {
+                                <td class="total">$ @item.UnitTotal</td>
+                            }
+                            <td class="delete">
+                                @{
+                                    string uniqueId = item.Id + "-deleteFromCart";
+                                    using (Html.BeginForm("Delete", "CartItems", new { id = item.Id }, FormMethod.Post, new { id = uniqueId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                    }
+                                }
+                                <a href="javascript:document.getElementById('@item.Id-deleteFromCart').submit()"><i class="icon-delete"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+            <!--Sidebar-->
+            <div class="col-lg-3 col-md-3">
+                <h3>Cart totals</h3>
+                <form class="cart-sidebar" method="post">
+                    <div class="cart-totals">
+                        <table>
+                            <tr>
+                                <td>Cart subtotal</td>
+                                <td class="total align-r">$ @ViewBag.CartItemsTotalCost</td>
+                            </tr>
+                            <tr class="">
+                                <td>Shipping</td>
+                                <td class="align-r">$ @shipping</td>
+                            </tr>
+                            <tr class="devider">
+                                <td>Taxes</td>
+                                <td class="align-r">$ @taxes</td>
+                            </tr>
+                            <tr>
+                                <td>Order total</td>
+                                <td class="total align-r">$ @total</td>
+                            </tr>
+                        </table>
 
-</table>
+                        @*<h3>Have a coupon?</h3>
+                        <div class="coupon">
+                            <div class="form-group">
+                                <label class="sr-only" for="coupon-code">Enter coupon code</label>
+                                <input type="text" class="form-control" id="coupon-code" name="coupon-code" placeholder="Enter coupon code">
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-sm btn-block" name="apply-coupon" value="Apply coupon">
+                        </div>*@
+                        @if (ViewBag.CartItemsTotalCost > 0)
+                        {
+                            <input type="submit" class="btn btn-black btn-sm btn-block" name="update-cart" value="Update shopping cart">
+                            <input type="submit" class="btn btn-primary btn-block" name="to-checkout" value="Proceed to checkout">
+                        }
+                    </div>
+
+                    @*<a class="panel-toggle" href="#calc-shipping"><h3>Calculate shipping</h3></a>
+                    <div class="hidden-panel calc-shipping" id="calc-shipping">
+                        <div class="form-group">
+                            <div class="select-style">
+                                <select name="country">
+                                    <option>Australia</option>
+                                    <option>Belgium</option>
+                                    <option>Germany</option>
+                                    <option>United Kingdom</option>
+                                    <option>Switzerland</option>
+                                    <option>USA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="state">State/ province</label>
+                            <input type="text" class="form-control" id="state" name="state" placeholder="State/ province">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="postcode">Postcode/ ZIP</label>
+                            <input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postcode/ ZIP">
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-sm btn-block" name="update-totals" value="Update totals">
+                    </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+</section><!--Shopping Cart Close-->

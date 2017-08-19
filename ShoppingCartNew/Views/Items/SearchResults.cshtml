@@ -6,7 +6,7 @@
 
 <section class="catalog-grid">
     <div class="container">
-        <h2>You Searched for '@ViewBag.SearchAttempt' (@Model.Count() @if (Model.Count() > 1) {<span>Results</span>} else {<span>Result</span>})</h2>
+        <h2>You Searched for '@ViewBag.SearchAttempt' (@Model.Count() @if (Model.Count() > 1 || Model.Count() == 0) {<span>Results</span>} else {<span>Result</span>})</h2>
         <hr />
         <div class="row">
             @foreach (var item in Model)
@@ -27,8 +27,12 @@
                             </a>
                             <div class="footer">
                                 <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
-                                <span>@item.Description</span>
-                                <button class="btn btn-primary">Add to Cart</button>
+                                @*<span>@item.Description</span>*@
+                                @using (Html.BeginForm("Create", "CartItems", new { id = item.Id }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" class="btn btn-primary" value="Add to Cart" />
+                                }
                             </div>
                         </div>
                     </div>
@@ -45,8 +49,12 @@
                             </a>
                             <div class="footer">
                                 <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
-                                <span>@item.Description</span>
-                                <button class="btn btn-primary">Add to Cart</button>
+                                @*<span>@item.Description</span>*@
+                                @using (Html.BeginForm("Create", "CartItems", new { id = item.Id }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" class="btn btn-primary" value="Add to Cart" />
+                                }
                             </div>
                         </div>
                     </div>

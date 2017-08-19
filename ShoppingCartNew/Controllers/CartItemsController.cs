@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShoppingCartNew.Models;
 using ShoppingCartNew.Models.Code_First;
+using Microsoft.AspNet.Identity;
 
 namespace ShoppingCartNew.Controllers
 {
@@ -36,73 +37,87 @@ namespace ShoppingCartNew.Controllers
         }
 
         // GET: CartItems/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: CartItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,Count,CustomerId,Created")] CartItem cartItem)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CartItems.Add(cartItem);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(cartItem);
-        }
-
-        // GET: CartItems/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Create(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CartItem cartItem = db.CartItems.Find(id);
-            if (cartItem == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(cartItem);
+
+            CartItem cartItem = new CartItem();
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            cartItem.Count = 1;
+            cartItem.ItemId = id.Value;
+            cartItem.Created = System.DateTime.Now;
+            cartItem.CustomerId = user.Id;
+            db.CartItems.Add(cartItem);
+            db.SaveChanges();
+
+            return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
+
+        // GET: CartItems/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CartItem cartItem = db.CartItems.Find(id);
+        //    if (cartItem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(cartItem);
+        //}
 
         // POST: CartItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemId,Count,CustomerId,Created")] CartItem cartItem)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(cartItem).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(cartItem);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,ItemId,Count,CustomerId,Created")] CartItem cartItem)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(cartItem).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(cartItem);
+        //}
 
         // GET: CartItems/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CartItem cartItem = db.CartItems.Find(id);
-            if (cartItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cartItem);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CartItem cartItem = db.CartItems.Find(id);
+        //    if (cartItem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(cartItem);
+        //}
 
         // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]

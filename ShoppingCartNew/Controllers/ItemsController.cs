@@ -15,9 +15,17 @@ namespace ShoppingCartNew.Controllers
     public class ItemsController : Universal
     {
         // GET: Items
-        public ActionResult Index()
+        public ActionResult Index(int? tId)
         {
-            return View(db.Items.ToList());
+            var myItems = db.Items.ToList();
+            if (tId != null)
+            {
+                ItemType itemType = db.ItemTypes.Find(tId.Value);
+                myItems = db.Items.Where(i => i.ItemTypeId == tId.Value).ToList();
+                ViewBag.ItemType = "(Filter: " + itemType.TypeName +  ")";
+            }
+            ViewBag.ItemCount = myItems.Count();
+            return View(myItems);
         }
 
         // GET: Items/SearchResults
@@ -50,6 +58,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "TypeName");
             return View();
         }
 
@@ -59,7 +68,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice")] Item item, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice,ItemTypeId")] Item item, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +117,7 @@ namespace ShoppingCartNew.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "TypeName", item.ItemTypeId);
             return View(item);
         }
 
@@ -125,6 +134,7 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "TypeName", item.ItemTypeId);
             return View(item);
         }
 
@@ -134,7 +144,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice")] Item item, string mediaURL, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice,ItemTypeId")] Item item, string mediaURL, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -190,6 +200,7 @@ namespace ShoppingCartNew.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "TypeName", item.ItemTypeId);
             return View(item);
         }
 
