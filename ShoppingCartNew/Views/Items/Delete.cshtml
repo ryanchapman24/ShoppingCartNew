@@ -32,13 +32,13 @@
                 {
                     <div class="price">$ @Model.Price</div>
                 }
-                <div class="buttons group">
+                @*<div class="buttons group">
                     <div class="qnt-count">
                         <a class="incr-btn" href="#">-</a>
-                        <input id="quantity" class="form-control" type="text" value="2">
+                        <input id="quantity" class="form-control" type="text" value="1">
                         <a class="incr-btn" href="#">+</a>
                     </div>
-                </div>
+                </div>*@
                 <p class="p-style2">@Html.Raw(Model.Description)</p>
                 <div class="row" style="padding: 20px">
                     <h3>Added to Catalog on: @Model.Created.ToShortDateString()</h3>

@@ -120,7 +120,7 @@
 
                                 <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><b>BARGAIN</b><i class="fa fa-chevron-down"></i></a>
                                 <ul class="submenu">
-                                    <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px"> @percentOff <span style="font-size: 40px">% </span> <span style="font-size: 45px"><br />Off!</span></h1></li>
+                                    <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px"><b> @percentOff <span style="font-size: 40px">% </span></b> <span style="font-size: 45px"><br />Off !</span></h1></li>
                                     @*<li><a href="#">Wristlet</a></li>
                                     <li class="has-submenu">
                                         <a href="#">Backpack</a>
@@ -144,29 +144,28 @@
                                     </li>
                                     <li><a href="#">Envelope</a></li>*@
                                     <li class="offer">
-                                        <div class="col-1">
-                                            <h3 style="margin-top: 0px; margin-bottom: 0px">Description</h3><hr style="margin-bottom: 0px"/><br />
-                                                @if (ViewBag.BiggestSale.Description.Length > 100)
+                                        <div class="col-1" style="padding-top: 10px">
+                                            <h3 style="margin-top: 0px; margin-bottom: 0px"><a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })" style="color: #ff9016; font-size: 14px; margin-left: -10px"><b>@ViewBag.BiggestSale.Name</b></a><b>$ @ViewBag.BiggestSale.SalePrice</b></h3><hr style="margin-bottom: 0px;"/><br />
+                                                @if (ViewBag.BiggestSale.Description.Length > 50)
                                                 { 
-                                                    @Html.Raw(ViewBag.BiggestSale.Description.Substring(0, 100) + "... ")<br /><br />
+                                                    <span>@Html.Raw(ViewBag.BiggestSale.Description.Substring(0, 50) + "... ")</span>
                                                 }
                                                 else
                                                 {
-                                                    @Html.Raw(ViewBag.BiggestSale.Description)<br /><br />
+                                                    <span>@Html.Raw(ViewBag.BiggestSale.Description)</span>
                                                 }
                                             @using (Html.BeginForm("Create", "CartItems", new { id = ViewBag.BiggestSale.Id }, FormMethod.Post))
                                             {
                                                 @Html.AntiForgeryToken()
-                                                <input type="submit" class="btn btn-primary" style="font-size: 14px; margin-top:-5px" value="Add to Cart" />
+                                                <input type="submit" class="btn btn-primary" style="font-size: 14px; margin-top:-15px" value="Add to Cart" />
                                             }
                                         </div>
                                         <div class="col-2">
                                             <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
                                         </div>
-                                        <div class="col-2">
-                                            <button class="btn btn-primary pull-right" onclick='location.href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"' style="font-size:14px; margin-right:-40px">View Product</button><br /><br /><br />
+                                        @*<div class="col-2">
                                             <p class="pull-right" style="margin-right: -25px; font-size: 14px">$ @ViewBag.BiggestSale.SalePrice</p>
-                                        </div>
+                                        </div>*@
                                     </li>
                                 </ul>
                             }
@@ -223,7 +222,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 col-md-8 col-sm-8">
-                    <h2>Subscribe to our news</h2>
+                    <h2>Subscribe to Our News</h2>
                     <form class="subscr-form" role="form" autocomplete="off">
                         <div class="form-group">
                             <label class="sr-only" for="subscr-name">Enter name</label>
@@ -251,7 +250,7 @@
                 <div class="col-lg-5 col-md-5 col-sm-5">
                     <div class="info">
                         <a class="logo text-nowrap" href="@Url.Action("Index","Home")" style="text-align: center"><h1><b style="color: black; font-size: 85px">E</b> <span  style="font-size: 65px">V O L V E</span></h1></a>
-                        <p>ECommerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
+                        <p>E-Commerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
                         <div class="social">
                             <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
@@ -263,7 +262,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
-                    <h2>Latest items</h2>
+                    <h2>Latest Items</h2>
                     <ul class="list-unstyled">
                         @{
                             int lItems = 0;
@@ -296,7 +295,7 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-lg-7 col-md-7 col-sm-7">
-                        <p>&copy; E V O L V E. All Rights Reserved. Designed by <a href="http://coderfoundry.com/ryanchapman" target="_blank">Ryan Chapman</a></p>
+                        <p>&copy; <b>E V O L V E</b> - @System.DateTime.Now.Year | All Rights Reserved | Designed by <a href="http://coderfoundry.com/ryanchapman" target="_blank">Ryan Chapman</a></p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">

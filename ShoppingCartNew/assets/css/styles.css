@@ -11783,7 +11783,7 @@ header .search-form .close-search:hover {
   background: #fff;
 }
 .menu .catalog li .submenu .offer .col-1 {
-  width: 40%;
+  width: 50%;
   position: absolute;
   left: 0;
   padding: 35px 0 20px 15px;
@@ -11793,10 +11793,10 @@ header .search-form .close-search:hover {
   line-height: 2.4;
 }
 .menu .catalog li .submenu .offer .col-2 {
-  width: 60%;
+  width: 50%;
   position: absolute;
   right: 0;
-  padding: 0 40px 0 20px;
+  padding: 0 0 0 20px;
 }
 .menu .catalog li .submenu .offer img {
   margin-bottom: 12px;

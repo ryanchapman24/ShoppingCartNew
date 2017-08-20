@@ -36,7 +36,7 @@ namespace ShoppingCartNew.Controllers
             {
                 return View(db.Items.Where(i => i.Id == 0).ToList());
             }
-            return View(db.Items.Where(i => i.Name.Contains(search)).ToList());
+            return View(db.Items.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).ToList());
         }
 
         // GET: Items/Details/5

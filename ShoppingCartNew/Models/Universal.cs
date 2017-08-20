@@ -23,17 +23,17 @@ namespace ShoppingCartNew.Models
                 ViewBag.FullName = user.FullName;
 
                 ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
-                ViewBag.CartItems = db.CartItems.AsNoTracking().Where(c => c.CustomerId == user.Id).ToList();
+                ViewBag.CartItems = user.CartItems.ToList();
                 decimal count = 0;
-                foreach (var cartItem in db.CartItems.AsNoTracking().Where(c => c.CustomerId == user.Id).ToList())
+                foreach (var cartItem in user.CartItems)
                 {
                     if (cartItem.Item.OnSale == true)
                     {
-                        count += cartItem.Item.SalePrice.Value;
+                        count += cartItem.Item.SalePrice.Value * Convert.ToDecimal(cartItem.Count);
                     }
                     else
                     {
-                        count += cartItem.Item.Price;
+                        count += cartItem.Item.Price * Convert.ToDecimal(cartItem.Count);
                     }
                 }
                 ViewBag.CartItemsTotalCost = count;

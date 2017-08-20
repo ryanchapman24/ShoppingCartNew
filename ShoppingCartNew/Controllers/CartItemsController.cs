@@ -18,23 +18,25 @@ namespace ShoppingCartNew.Controllers
         // GET: CartItems
         public ActionResult Index()
         {
-            return View(db.CartItems.ToList());
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            return View(user.CartItems);
         }
 
         // GET: CartItems/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CartItem cartItem = db.CartItems.Find(id);
-            if (cartItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cartItem);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CartItem cartItem = db.CartItems.Find(id);
+        //    if (cartItem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(cartItem);
+        //}
 
         // GET: CartItems/Create
         //public ActionResult Create()
@@ -59,16 +61,25 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
-
-            CartItem cartItem = new CartItem();
+     
             var user = db.Users.Find(User.Identity.GetUserId());
-
-            cartItem.Count = 1;
-            cartItem.ItemId = id.Value;
-            cartItem.Created = System.DateTime.Now;
-            cartItem.CustomerId = user.Id;
-            db.CartItems.Add(cartItem);
-            db.SaveChanges();
+            if (db.CartItems.Where(i => i.CustomerId == user.Id).Any(i => i.ItemId == id.Value))
+            {
+                var existingCartItem = db.CartItems.Where(i => i.CustomerId == user.Id).FirstOrDefault(i => i.ItemId == id.Value);
+                existingCartItem.Count += 1;
+                db.SaveChanges();
+                return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
+            }
+            else
+            {
+                CartItem cartItem = new CartItem();
+                cartItem.Count = 1;
+                cartItem.ItemId = id.Value;
+                cartItem.Created = System.DateTime.Now;
+                cartItem.CustomerId = user.Id;
+                db.CartItems.Add(cartItem);
+                db.SaveChanges();
+            }
 
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
@@ -124,9 +135,34 @@ namespace ShoppingCartNew.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
             CartItem cartItem = db.CartItems.Find(id);
+            if (cartItem.CustomerId != user.Id)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             db.CartItems.Remove(cartItem);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // POST: CartItems/EmptyCart
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmptyCart()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            var myCartItems = db.CartItems.Where(i => i.CustomerId == user.Id);
+            foreach (var item in myCartItems)
+            {
+                db.CartItems.Remove(item);
+            }
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
