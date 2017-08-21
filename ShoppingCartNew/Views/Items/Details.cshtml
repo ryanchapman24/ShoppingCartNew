@@ -12,10 +12,10 @@
 
             <!--Product Gallery-->
             <div class="col-lg-6 col-md-6">
-                <div class="prod-gal master-slider" id="prod-gal">
+                <div class="prod-gal master-slider animated fadeInLeft" id="prod-gal" style="animation-delay: .25s; animation-duration: .25s">
                     <!--Slide1-->
                     <div class="ms-slide">
-                        <img src="@Model.MediaURL" data-src="@Model.MediaURL" alt="Lorem ipsum" />
+                        <img src="@Model.MediaURL" data-src="@Model.MediaURL" alt="Lorem ipsum"/>
                         @*<img class="ms-thumb" src="@Model.MediaURL" alt="thumb" />*@
                     </div>
                     @*<!--Slide2-->
@@ -43,43 +43,46 @@
 
             <!--Product Description-->
             <div class="col-lg-6 col-md-6">
-                <h1>@Model.Name</h1>
-                @if (Model.OnSale == true)
-                {
-                    <div class="old-price">$ @Model.Price</div>
-                    <div class="price">$ @Model.SalePrice</div>
-                }
-                else
-                {
-                    <div class="price">$ @Model.Price</div>
-                }
-                <div class="buttons group">
-                    <div class="qnt-count">
-                        <a class="incr-btn" href="#">-</a>
-                        <input id="quantity" class="form-control" type="text" value="1">
-                        <a class="incr-btn" href="#">+</a>
-                    </div>
-                    @*<a class="btn btn-primary btn-sm" id="addItemToCart" href="#"><i class="icon-shopping-cart"></i>Add to cart</a>*@
-                    @*<a class="btn btn-black btn-sm" href="#"><i class="icon-heart"></i>Add to wishlist</a>*@
-                </div>
-                <p class="p-style2">@Html.Raw(Model.Description)</p>
-                <div class="row" style="padding: 20px">
-                    <h3>Added to Catalog on: @Model.Created.ToShortDateString()</h3>
-                    @if (Model.Updated.HasValue)
+                <div class="animated fadeInRight" style="animation-delay: .25s; animation-duration: .25s">
+                    <h1>@Model.Name</h1>
+                    @if (Model.OnSale == true)
                     {
-                        <h5>Last Updated: @Model.Updated.Value.ToShortDateString()</h5>
+                        <div class="old-price">$ @Model.Price</div>
+                        <div class="price">$ @Model.SalePrice</div>
                     }
-                </div>
-                <div class="promo-labels">
-                    @*<div data-content="This is a place for the unique commercial offer. Make it known."><span><i class="fa fa-truck"></i>Free delivery</span></div>*@
-                    @if (User.Identity.IsAuthenticated)
+                    else
                     {
-                        using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post, new { id="detailsForm"}))
+                        <div class="price">$ @Model.Price</div>
+                    }
+                    <div class="buttons group">
+                        @using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post, new { id = "detailsForm" }))
                         {
                             @Html.AntiForgeryToken()
+                            <div class="qnt-count">
+                                <a class="incr-btn" href="#">-</a>
+                                <input name="quantity" class="form-control" type="text" value="1">
+                                <a class="incr-btn" href="#">+</a>
+                            </div>
                         }
-                        <a href="javascript:document.getElementById('detailsForm').submit()"><div data-content="Items in your shopping cart will stay there until you remove them or submit an order"><i class="icon-shopping-cart-content"></i>Add to Cart</div></a>
+                    </div>
+                    <blockquote>
+                        <p>@Html.Raw(Model.Description)</p>
+                        @*<footer>Someone famous in Source Title</footer>*@
+                    </blockquote>
+                    <div class="row" style="padding: 20px">
+                        <h3>Added to Catalog on: @Model.Created.ToShortDateString()</h3>
+                        @if (Model.Updated.HasValue)
+                        {
+                            <h5>Last Updated: @Model.Updated.Value.ToShortDateString()</h5>
+                        }
+                    </div>
+                </div>
+                <div class="promo-labels animated fadeInUp" style="animation-delay: .25s; animation-duration: 2s">
+                    @using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post, new { id="detailsForm"}))
+                    {
+                        @Html.AntiForgeryToken()
                     }
+                    <a href="javascript:document.getElementById('detailsForm').submit()"><div data-content="Items in your shopping cart will stay there until you remove them or submit an order"><i class="icon-shopping-cart-content"></i>Add to Cart</div></a>
                     <a href="@Url.Action("Index")"><div><i class="icon-arrow-left"></i>Return to Index</div></a>
                     @if (User.IsInRole("Admin"))
                     {

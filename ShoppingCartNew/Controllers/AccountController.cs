@@ -84,6 +84,20 @@ namespace ShoppingCartNew.Controllers
                     {
                         return Redirect(returnUrl);
                     }
+                    else if (returnUrl.Contains("/CartItems/Create/"))
+                    {
+                        char[] charArray = returnUrl.ToCharArray();
+                        Array.Reverse(charArray);
+                        string reverse = new string(charArray);
+                        int index = reverse.IndexOf("/");
+                        string target = reverse.Substring(0, index);
+                        char[] charArray2 = target.ToCharArray();
+                        Array.Reverse(charArray2);
+                        string final = new string(charArray2);
+                        int itemId = Convert.ToInt32(final);
+
+                        return RedirectToAction("Details", "Items", new { id = itemId });
+                    }
                     else
                     {
                         return RedirectToLocal(returnUrl);

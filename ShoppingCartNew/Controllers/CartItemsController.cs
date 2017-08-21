@@ -20,7 +20,7 @@ namespace ShoppingCartNew.Controllers
         {
             var user = db.Users.Find(User.Identity.GetUserId());
 
-            return View(user.CartItems);
+            return View(user.CartItems.OrderBy(i => i.Id));
         }
 
         // GET: CartItems/Details/5
@@ -50,8 +50,9 @@ namespace ShoppingCartNew.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int? id)
+        public ActionResult Create(int? id, int? quantity)
         {
+            int increment = 1;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -61,19 +62,21 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
-     
+            if (quantity != null) {
+                increment = quantity.Value;
+            }
             var user = db.Users.Find(User.Identity.GetUserId());
             if (db.CartItems.Where(i => i.CustomerId == user.Id).Any(i => i.ItemId == id.Value))
             {
                 var existingCartItem = db.CartItems.Where(i => i.CustomerId == user.Id).FirstOrDefault(i => i.ItemId == id.Value);
-                existingCartItem.Count += 1;
+                existingCartItem.Count += increment;
                 db.SaveChanges();
                 return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
             }
             else
             {
                 CartItem cartItem = new CartItem();
-                cartItem.Count = 1;
+                cartItem.Count = increment;
                 cartItem.ItemId = id.Value;
                 cartItem.Created = System.DateTime.Now;
                 cartItem.CustomerId = user.Id;
@@ -162,6 +165,38 @@ namespace ShoppingCartNew.Controllers
                 db.CartItems.Remove(item);
             }
             db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCart(List<int> quantities)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            var myCartItems = user.CartItems.OrderBy(i => i.Id).ToArray();
+            var number = 0;
+            foreach (var quantity in quantities)
+            {
+                var cartItem = myCartItems[number];
+                cartItem.Count = quantity;
+                db.SaveChanges();
+                number++;
+            }
+
+            //foreach (var val in quantities)
+            //{
+            //    int index = val.IndexOf("-");
+            //    string itemId = val.Substring(0, index);
+            //    string quantity = val.Substring(index + 1, val.Length);
+            //    int iId = Convert.ToInt32(itemId);
+            //    int q = Convert.ToInt32(quantity);
+            //    var item = db.CartItems.Find(iId);
+            //    item.Count = q;
+            //    db.SaveChanges();
+            //}
 
             return RedirectToAction("Index");
         }

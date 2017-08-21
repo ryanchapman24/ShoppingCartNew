@@ -27,10 +27,10 @@
 </head>
 
 <!--Body-->
-<body>
+<body style="overflow-x: hidden">
 
     <!--Login Modal-->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+    @*<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,7 +63,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>*@<!-- /.modal -->
     <!--Header-->
     <header data-offset-top="500" data-stuck="600">
         <!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
@@ -161,7 +161,7 @@
                                             }
                                         </div>
                                         <div class="col-2">
-                                            <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
+                                            <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img class="img-thumbnail center-block" src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
                                         </div>
                                         @*<div class="col-2">
                                             <p class="pull-right" style="margin-right: -25px; font-size: 14px">$ @ViewBag.BiggestSale.SalePrice</p>
@@ -238,7 +238,10 @@
                     <p class="p-style2">Please fill the field before continuing</p>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-1">
-                    <p class="p-style3">Get email notifications every time we drop new merch on the site or when any of our items go on sale!</p>
+                    <blockquote class="blockquote-reverse" style="border-right: 5px solid black">
+                        <p class="p-style3" style="font-size: 16px">Get email notifications every time we drop new merch on the site or when any of our items go on sale!</p>
+                        @*<footer>Someone famous in Source Title</footer>*@
+                    </blockquote>
                 </div>
             </div>
         </div>
@@ -249,15 +252,16 @@
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-5">
                     <div class="info">
-                        <a class="logo text-nowrap" href="@Url.Action("Index","Home")" style="text-align: center"><h1><b style="color: black; font-size: 85px">E</b> <span  style="font-size: 65px">V O L V E</span></h1></a>
-                        <p>E-Commerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
+                        <a class="logo text-nowrap" href="@Url.Action("Index","Home")" style="text-align: center; margin-bottom: 0px; border-left: 2px solid white"><h1><b style="color: black; font-size: 85px">E</b> <span  style="font-size: 65px">V O L V E</span></h1></a>
+                        <blockquote style="border-left: 2px solid white">
+                            <p style="font-size: 12px">E-Commerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
+                            @*<footer>Someone famous in Source Title</footer>*@
+                        </blockquote>
                         <div class="social">
-                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-tumblr-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-vimeo-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-pinterest-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                            <a href="https://www.instagram.com/coderfoundry/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/channel/UCdy4oVOw9qX3_47OFudDCeA" target="_blank"><i class="fa fa-youtube-square"></i></a>
+                            <a href="https://twitter.com/coderfoundry?lang=en" target="_blank"><i class="fa fa-twitter-square"></i></a>
+                            <a href="https://www.facebook.com/coderfoundry/" target="_blank"><i class="fa fa-facebook-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -336,6 +340,20 @@
                     scrollTop: $("#contactDest").offset().top
                 }, 2000);
             })
+        });
+    </script>
+    <script>
+        $(document).on('invalid-form.validate', 'form', function () {
+            var button = $(this).find('input[type="submit"], button[type="submit"]');
+            setTimeout(function () {
+                button.removeAttr('disabled');
+            }, 1);
+        });
+        $(document).on('submit', 'form', function () {
+            var button = $(this).find('input[type="submit"], button[type="submit"]');
+            setTimeout(function () {
+                button.attr('disabled', 'disabled');
+            }, 0);
         });
     </script>
 </body><!--Body Close-->

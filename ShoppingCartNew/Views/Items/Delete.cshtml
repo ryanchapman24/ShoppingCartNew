@@ -39,7 +39,10 @@
                         <a class="incr-btn" href="#">+</a>
                     </div>
                 </div>*@
-                <p class="p-style2">@Html.Raw(Model.Description)</p>
+                <blockquote>
+                    <p>@Html.Raw(Model.Description)</p>
+                    @*<footer>Someone famous in Source Title</footer>*@
+                </blockquote>
                 <div class="row" style="padding: 20px">
                     <h3>Added to Catalog on: @Model.Created.ToShortDateString()</h3>
                     @if (Model.Updated.HasValue)
