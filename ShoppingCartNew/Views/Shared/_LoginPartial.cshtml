@@ -9,7 +9,6 @@
         <a class="login-btn btn-outlined-invert" href="@Url.Action("Index", "Manage")"><i class="icon-profile"></i><span><b style="color: #ff9016 !important">@ViewBag.FirstName</b></span></a>
         <div class="cart-btn">
             <a class="btn btn-outlined-invert" href="@Url.Action("Index", "CartItems")">@if (ViewBag.CartItems.Count > 0){<i class="icon-shopping-cart-content"></i>}else{<i class="icon-shopping-cart"></i>}<span>@ViewBag.CartItems.Count</span><b>$ @ViewBag.CartItemsTotalCost</b></a>
-
             <!--Cart Dropdown-->
             <div class="cart-dropdown">
                 <span></span><!--Small rectangle to overlap Cart button-->

@@ -54,6 +54,15 @@ namespace ShoppingCartNew.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            ViewBag.MyCards = user.CreditCards.ToList();
+            ViewBag.MyOrders = user.Orders.ToList();
+            ViewBag.CardTypeId = new SelectList(db.CardTypes, "Id", "CardName");
+            ViewBag.StateId = new SelectList(db.States, "Id", "StateName");
+            ViewBag.MonthId = new SelectList(db.Months, "Id", "MonthName");
+            ViewBag.YearId = new SelectList(db.Years, "Id", "YearName");
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."

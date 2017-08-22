@@ -26,10 +26,12 @@ namespace ShoppingCartNew.Models
         {
             this.Orders = new HashSet<Order>();
             this.CartItems = new HashSet<CartItem>();
+            this.CreditCards = new HashSet<CreditCard>();
         }
 
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<CreditCard> CreditCards { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -57,5 +59,10 @@ namespace ShoppingCartNew.Models
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ItemType> ItemTypes { get; set; }
+        public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<CardType> CardTypes { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<Month> Months { get; set; }
+        public DbSet<Year> Years { get; set; }
     }
 }

@@ -92,19 +92,14 @@
         <nav class="menu">
             <div class="container">
                 <ul class="main">
-                    <li class="hide-sm"><a href="@Url.Action("Index", "Home")"><span>H</span>ome</a></li>
-                    <li class="has-submenu">
-                        <a href="index.html"><span>A</span>bout<i class="fa fa-chevron-down"></i></a><!--Class "has-submenu" for proper highlighting and dropdown-->
-                        <ul class="submenu">
-                            <li><a href="index.html">Home - Slideshow</a></li>
-                            <li><a href="home-fullscreen.html">Home - Fullscreen Slider</a></li>
-                            <li><a href="home-showcase.html">Home - Product Showcase</a></li>
-                            <li><a href="home-categories.html">Home - Categories Slider</a></li>
-                            <li><a href="home-offers.html">Home - Special Offers</a></li>
-                        </ul>
+                    <li class="hide-sm">
+                        <a href="@Url.Action("Index", "Home")"><span>H</span>ome</a>
                     </li>
-                    <li class="has-submenu">
-                        <a id="contactScroll" href="#"><span>C</span>ontact<i class="fa fa-chevron-down"></i></a>
+                    <li class="hide-sm">
+                        <a href="@Url.Action("About", "Home")"><span>A</span>bout</a>
+                    </li>
+                    <li class="hide-sm">
+                        <a id="contactScroll" href="#"><span>C</span>ontact</a>
                     </li>
                 </ul>
             </div>
@@ -112,7 +107,8 @@
             <div class="catalog-block">
                 <div class="container">
                     <ul class="catalog" style="text-align:left">
-                        <li class="has-submenu">
+                        <li class=""><a href="@Url.Action("Index","Items")"><b>CATALOG</b></a></li>
+                        <li class="has-submenu pull-left">
                             @if (ViewBag.BiggestSale != null)
                                 {
                                 var priceDiff = ViewBag.BiggestSale.Price - ViewBag.BiggestSale.SalePrice;
@@ -121,28 +117,6 @@
                                 <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><b>BARGAIN</b><i class="fa fa-chevron-down"></i></a>
                                 <ul class="submenu">
                                     <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px"><b> @percentOff <span style="font-size: 40px">% </span></b> <span style="font-size: 45px"><br />Off !</span></h1></li>
-                                    @*<li><a href="#">Wristlet</a></li>
-                                    <li class="has-submenu">
-                                        <a href="#">Backpack</a>
-                                        <ul class="sub-submenu">
-                                            <li><a href="#">KATA</a></li>
-                                            <li><a href="#">Think Tank</a></li>
-                                            <li><a href="#">Manfrotto</a></li>
-                                            <li><a href="#">Lowepro</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Hat box</a></li>
-                                    <li class="has-submenu">
-                                        <a href="#">Clutch</a>
-                                        <ul class="sub-submenu">
-                                            <li><a href="#">Louis Vuitton</a></li>
-                                            <li><a href="#">Chanel</a></li>
-                                            <li><a href="#">Christian Dior</a></li>
-                                            <li><a href="#">Gucci</a></li>
-                                            <li><a href="#">Neri Karra</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Envelope</a></li>*@
                                     <li class="offer">
                                         <div class="col-1" style="padding-top: 10px">
                                             <h3 style="margin-top: 0px; margin-bottom: 0px"><a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })" style="color: #ff9016; font-size: 14px; margin-left: -10px"><b>@ViewBag.BiggestSale.Name</b></a><b>$ @ViewBag.BiggestSale.SalePrice</b></h3><hr style="margin-bottom: 0px;"/><br />
@@ -157,27 +131,20 @@
                                             @using (Html.BeginForm("Create", "CartItems", new { id = ViewBag.BiggestSale.Id }, FormMethod.Post))
                                             {
                                                 @Html.AntiForgeryToken()
-                                                <input type="submit" class="btn btn-primary" style="font-size: 14px; margin-top:-15px" value="Add to Cart" />
+                                                <input type="submit" class="btn btn-primary" style="font-size: 14px; margin-top:-20px" value="Add to Cart" />
                                             }
                                         </div>
                                         <div class="col-2">
                                             <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><img class="img-thumbnail center-block" src="@ViewBag.BiggestSale.MediaURL" style="max-height: 192px" alt="Special Offer" /></a>
                                         </div>
-                                        @*<div class="col-2">
-                                            <p class="pull-right" style="margin-right: -25px; font-size: 14px">$ @ViewBag.BiggestSale.SalePrice</p>
-                                        </div>*@
                                     </li>
                                 </ul>
                             }
                         </li>
-                        <li><a href="@Url.Action("Index","Items")"><b>CATALOG</b></a></li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li><a href="@Url.Action("Index","CartItems")"><b>CART</b></a></li>
+                            <li class=""><a href="@Url.Action("Index","CartItems")"><b>CART</b></a></li>
                         }
-                        @*<li><a href="shop-filters-left-3cols.html">Clutch</a></li>
-                        <li><a href="shop-filters-left-3cols.html">Hobo bags</a></li>
-                        <li><a href="shop-filters-left-3cols.html">Shoulder Bag</a></li>*@
                     </ul>
                 </div>
             </div>
@@ -304,10 +271,10 @@
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">
                             <img src="~/assets/img/payment/visa.png" alt="Visa" />
-                            <img src="~/assets/img/payment/paypal.png" alt="PayPal" />
+                            @*<img src="~/assets/img/payment/paypal.png" alt="PayPal" />*@
                             <img src="~/assets/img/payment/master.png" alt="Master Card" />
                             <img src="~/assets/img/payment/discover.png" alt="Discover" />
-                            <img src="~/assets/img/payment/amazon.png" alt="Amazon" />
+                            @*<img src="~/assets/img/payment/amazon.png" alt="Amazon" />*@
                         </div>
                     </div>
                 </div>
@@ -330,8 +297,6 @@
     <script src="~/assets/js/plugins/owl.carousel.min.js"></script>
     <script src="~/assets/js/plugins/masterslider.min.js"></script>
     <script src="~/assets/js/scripts.js"></script>
-    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
-    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
     @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {

@@ -1,7 +1,43 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿<section class="catalog-single">
+    <div class="container">
+        <h2>About</h2>
+        <hr /><br />
+        <h3>Where are we located?</h3>
+        <div class="row" style="padding-right: 10px; padding-left: 10px">
+            <div style="">
+                <div id="map1" class="col-md-6 col-sm-12" style="height: 400px"></div>
+            </div>
+            <div style="">
+                <div id="map2" class="col-md-6 col-sm-12" style="height: 400px"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<p>Use this area to provide additional information.</p>
+@section Scripts {
+    <script>
+          function initMap() {
+            var uluru = { lat: 36.0966952, lng: -80.0722239 };
+            var map1 = new google.maps.Map(document.getElementById('map1'), {
+              zoom: 6,
+              center: uluru
+            });
+            var map2 = new google.maps.Map(document.getElementById('map2'), {
+                zoom: 19,
+                center: uluru,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            });
+            var marker = new google.maps.Marker({
+              position: uluru,
+              map: map1
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map2
+            });
+          }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDea7TZRzp3DBJZoW83spi9hvQ_tu_2Grk&callback=initMap">
+    </script>
+}

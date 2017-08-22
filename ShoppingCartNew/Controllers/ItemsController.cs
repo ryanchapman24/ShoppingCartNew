@@ -105,7 +105,7 @@ namespace ShoppingCartNew.Controllers
 
                 item.MediaURL = iPic;
                 item.Created = System.DateTime.Now;
-                if (item.OnSale == false)
+                if (item.OnSale == false || (item.OnSale == true && item.SalePrice > item.Price))
                 {
                     item.SalePrice = null;
                 }
@@ -189,7 +189,7 @@ namespace ShoppingCartNew.Controllers
 
                 item.MediaURL = iPic;
                 item.Updated = System.DateTime.Now;
-                if (item.OnSale == false)
+                if (item.OnSale == false || (item.OnSale == true && item.SalePrice > item.Price))
                 {
                     item.SalePrice = null;
                 }

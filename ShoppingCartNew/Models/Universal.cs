@@ -18,12 +18,13 @@ namespace ShoppingCartNew.Models
             if (User.Identity.IsAuthenticated)
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
+
                 ViewBag.FirstName = user.FirstName;
                 ViewBag.LastName = user.LastName;
                 ViewBag.FullName = user.FullName;
 
-                ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
                 ViewBag.CartItems = user.CartItems.ToList();
+                ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
                 decimal count = 0;
                 foreach (var cartItem in user.CartItems)
                 {
