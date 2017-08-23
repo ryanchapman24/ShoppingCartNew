@@ -6,7 +6,7 @@
 
 <section class="catalog-single">
     <div class="container">
-        <h2>Item Details</h2>
+        <h2>Item Details @if (Model.Deleted == true){<span class="pull-right light-weight uppercase" style="color: #ff9016">Not Currently Available</span>}</h2>
         <hr /><br />
         <div class="row">
 
@@ -77,11 +77,14 @@
                     </div>
                 </div>
                 <div class="promo-labels animated fadeInUp" style="animation-delay: .25s; animation-duration: 2s">
-                    @using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post, new { id="detailsForm"}))
+                    @if (Model.Deleted == false)
                     {
-                        @Html.AntiForgeryToken()
+                        using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post, new { id="detailsForm"}))
+                        {
+                            @Html.AntiForgeryToken()
+                        }
+                        <a href="javascript:document.getElementById('detailsForm').submit()"><div data-content="Items in your shopping cart will stay there until you remove them or submit an order"><i class="icon-shopping-cart-content"></i>Add to Cart</div></a>
                     }
-                    <a href="javascript:document.getElementById('detailsForm').submit()"><div data-content="Items in your shopping cart will stay there until you remove them or submit an order"><i class="icon-shopping-cart-content"></i>Add to Cart</div></a>
                     <a href="@Url.Action("Index")"><div><i class="icon-arrow-left"></i>Return to Index</div></a>
                     @if (User.IsInRole("Admin"))
                     {

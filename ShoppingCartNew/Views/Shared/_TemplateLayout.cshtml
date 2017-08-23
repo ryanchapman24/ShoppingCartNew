@@ -92,6 +92,12 @@
         <nav class="menu">
             <div class="container">
                 <ul class="main">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="hide-sm">
+                            <a href="@Url.Action("Index", "Admin")"><span>A</span>dmin</a>
+                        </li>
+                    }
                     <li class="hide-sm">
                         <a href="@Url.Action("Index", "Home")"><span>H</span>ome</a>
                     </li>

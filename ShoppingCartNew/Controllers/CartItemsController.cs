@@ -37,7 +37,7 @@ namespace ShoppingCartNew.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Item item = db.Items.Find(id);
-            if (item == null)
+            if (item == null || item.Deleted == true)
             {
                 return HttpNotFound();
             }

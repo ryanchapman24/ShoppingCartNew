@@ -19,6 +19,7 @@ namespace ShoppingCartNew.Models.Code_First
         public bool OnSale { get; set; }
         public decimal? SalePrice { get; set; }
         public int ItemTypeId { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual ItemType ItemType { get; set; }
 

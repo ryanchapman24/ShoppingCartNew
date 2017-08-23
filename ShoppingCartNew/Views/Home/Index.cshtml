@@ -50,9 +50,9 @@
             {
                 <!--Category-->
                 <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                    <a href="@Url.Action("Index", "Items", new { tId = item.Id})" style="padding-bottom:10px">
+                    <a href="@Url.Action("Index", "Items", new { tId = item.Id})" style="padding: 0px">
                         @*<img src="~/assets/img/categories/1.png" alt="1" />*@
-                        <p style="font-size: 26px;color: white; background-color: #b2b2b2">@item.TypeName</p>
+                        <p class="light-weight uppercase" style="font-size: 26px;color: white; background-color: #b2b2b2; margin-top: 0px">@item.TypeName</p>
                     </a>
                 </div>
             }           

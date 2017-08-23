@@ -17,7 +17,7 @@ namespace ShoppingCartNew.Controllers
         // GET: Items
         public ActionResult Index(int? tId)
         {
-            var myItems = db.Items.ToList();
+            var myItems = db.Items.Where(i => i.Deleted == false).ToList();
             if (tId != null)
             {
                 ItemType itemType = db.ItemTypes.Find(tId.Value);
@@ -32,11 +32,13 @@ namespace ShoppingCartNew.Controllers
         public ActionResult SearchResults(string search)
         {
             ViewBag.SearchAttempt = search;
+            var myItems = db.Items.Where(i => i.Deleted == false).ToList();
+
             if (search == "")
             {
-                return View(db.Items.Where(i => i.Id == 0).ToList());
+                return View(myItems.Where(i => i.Id == 0).ToList());
             }
-            return View(db.Items.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).OrderByDescending(i => i.Id).ToList());
+            return View(myItems.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).OrderByDescending(i => i.Id).ToList());
         }
 
         // GET: Items/Details/5
@@ -113,6 +115,7 @@ namespace ShoppingCartNew.Controllers
                 {
                     item.OnSale = false;
                 }
+                item.Deleted = false;
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -227,8 +230,13 @@ namespace ShoppingCartNew.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Item item = db.Items.Find(id);
-            db.Items.Remove(item);
+            item.Deleted = true;
             db.SaveChanges();
+            foreach (var cart in db.CartItems.Where(c => c.ItemId == id).ToList())
+            {
+                db.CartItems.Remove(cart);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

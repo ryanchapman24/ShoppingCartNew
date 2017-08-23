@@ -40,7 +40,7 @@ namespace ShoppingCartNew.Models
                 ViewBag.CartItemsTotalCost = count;
 
                 var latestItems = new List<Item>();
-                var myItems = db.Items.AsNoTracking().OrderByDescending(i => i.Created).ToList();
+                var myItems = db.Items.AsNoTracking().Where(i => i.Deleted == false).OrderByDescending(i => i.Created).ToList();
                 int Litem = 0;
                 foreach (var latestItem in myItems)
                 {
@@ -49,7 +49,7 @@ namespace ShoppingCartNew.Models
                     if (Litem == 20) { break; };
                 }
                 ViewBag.Latest = latestItems;
-                var saleItems = db.Items.AsNoTracking().Where(i => i.OnSale == true).ToList();
+                var saleItems = db.Items.AsNoTracking().Where(i => i.Deleted == false && i.OnSale == true).ToList();
                 if (saleItems.Count() > 0)
                 {
                     var biggestSale = saleItems.FirstOrDefault();
