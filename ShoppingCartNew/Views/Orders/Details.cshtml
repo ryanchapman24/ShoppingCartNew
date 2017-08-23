@@ -3,55 +3,344 @@
 @{
     ViewBag.Title = "Details";
 }
+<!--Breadcrumbs-->
+<ol class="breadcrumb">
+</ol><!--Breadcrumbs Close-->
 
-<h2>Details</h2>
+<!--Support-->
+<section class="tracking">
+    <div class="container">
+        <div class="row">
+            <h2 class="title">Order Details<a href="@Url.Action("Index", "Manage")" class="btn btn-black pull-right" style="font-size: 12px">Back to Orders</a></h2>
+            <hr />
+            <div class="row space-top">
+                <div class="clo-lg-8 col-md-8 col-sm-8 space-bottom animated fadeInLeft" style="animation-delay: .25s;animation-duration: .25s">
+                    <h4 class="light-weight uppercase" style="color: #ff9016">Track Your Shipment</h4>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                    <div class="ship-scale">
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+                        @if (Model.DeliveryStage > 0)
+                        {
+                            if (Model.DeliveryStage == 1)
+                            {
+                                <span class="round done">
+                                    <i class="fa fa-check"></i>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
+                                    <span class="textik">Processing</span>
+                                    <span class="textik2">10%</span>
 
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="round done">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Zipcode)
-        </dt>
+                                    <span class="textik">Processing</span>
+                                    <span class="textik2">10%</span>
 
-        <dd>
-            @Html.DisplayFor(model => model.Zipcode)
-        </dd>
+                                </span>
+                            }
+                        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </dt>
+                        @if (Model.DeliveryStage > 1)
+                        {
+                            if (Model.DeliveryStage == 2)
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+                                        <i class="fa fa-check"></i>
 
-        <dd>
-            @Html.DisplayFor(model => model.OrderDate)
-        </dd>
+                                        <span class="textik">Shipped</span>
+                                        <span class="textik2">25%</span>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </dt>
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
 
-        <dd>
-            @Html.DisplayFor(model => model.CustomerId)
-        </dd>
+                                        <span class="textik">Shipped</span>
+                                        <span class="textik2">25%</span>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                                    </span>
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="flat">
+                                <span class="round">
+
+                                    <span class="textik">Shipped</span>
+                                    <span class="textik2">25%</span>
+
+                                </span>
+                            </span>
+                        }
+
+                        @if (Model.DeliveryStage > 2)
+                        {
+                            if (Model.DeliveryStage == 3)
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+                                        <i class="fa fa-check"></i>
+
+                                        <span class="textik">In Transit</span>
+                                        <span class="textik2">50%</span>
+
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+
+                                        <span class="textik">In Transit</span>
+                                        <span class="textik2">50%</span>
+
+                                    </span>
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="flat">
+                                <span class="round">
+
+                                    <span class="textik">In Transit</span>
+                                    <span class="textik2">50%</span>
+
+                                </span>
+                            </span>
+                        }
+
+                        @if (Model.DeliveryStage > 3)
+                        {
+                            if (Model.DeliveryStage == 4)
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+                                        <i class="fa fa-check"></i>
+
+                                        <span class="textik">Out For Delivery</span>
+                                        <span class="textik2">75%</span>
+
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+
+                                        <span class="textik">Out For Delivery</span>
+                                        <span class="textik2">75%</span>
+
+                                    </span>
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="flat">
+                                <span class="round">
+
+                                    <span class="textik">Out For Delivery</span>
+                                    <span class="textik2">75%</span>
+
+                                </span>
+                            </span>
+                        }
+
+                        @if (Model.DeliveryStage > 4)
+                        {
+                            if (Model.DeliveryStage == 5)
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+                                        <i class="fa fa-check"></i>
+
+                                        <span class="textik">Delivered</span>
+                                        <span class="textik2">100%</span>
+
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="flat done">
+                                    <span class="round done">
+
+                                        <span class="textik">Delivered</span>
+                                        <span class="textik2">100%</span>
+
+                                    </span>
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="flat">
+                                <span class="round">
+
+                                    <span class="textik">Delivered</span>
+                                    <span class="textik2">100%</span>
+
+                                </span>
+                            </span>
+                        }
+                    </div>
+
+                    <div class="accordion panel-group animated fadeInDown" style="animation-delay: .25s;animation-duration: 2s">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" href="#collapseOne"><i></i>Payment Information</a>
+                            </div>
+                            <div id="collapseOne" class="collapse">
+                                <div class="panel-body">
+                                    <table>
+                                        <tr>
+                                            <td><b>Credit Card</b><br /><br /></td>
+                                            <td><b>Billing Address</b><br /><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>@Model.CreditCard.CardNumber</td>
+                                            <td>@Model.Customer.FullName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>EXP: @Model.CreditCard.Month.MonthName / @Model.CreditCard.Year.YearName</td>
+                                            <td>@Model.CreditCard.Address</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CVC: @Model.CreditCard.CVC</td>
+                                            <td>@Model.CreditCard.City, @Model.CreditCard.State.Abbreviation @Model.CreditCard.Zipcode</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="@Model.CreditCard.CardType.MediaURL" /><br /></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clo-lg-4 col-md-4 col-sm-4 space-bottom animated fadeInRight" style="animation-delay: .25s;animation-duration: .25s">
+                    <h4 class="light-weight uppercase" style="color: #ff9016">Shipment information</h4>
+
+                    <div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016"></div>
+                        <div>
+                            Order Placed: <span class="pull-right">@Model.OrderDate</span><br />
+                            @if (Model.DeliveryStage == 5)
+                            {
+                                <span>Delivered: <span class="pull-right">@Model.EstimatedDelivery.ToShortDateString()</span><br /></span>
+                            }
+                            else
+                            {
+                                <span>Estimated Delivery: <span class="pull-right">@Model.EstimatedDelivery.ToShortDateString()</span><br /></span>
+                            }
+                        </div>
+                    </div><hr />
+
+                    <div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016">Contents</div>
+                        <div>
+                            @{ 
+                                int count = 0;
+                                foreach (var item in Model.OrderItems)
+                                {
+                                    count += item.Quantity;
+                                }
+                            }
+                            @if (count == 1)
+                            {
+                                @count <span>Item<br /><br /></span>
+                            }
+                            else
+                            {
+                                @count <span>Items<br /><br /></span>
+                            }
+                            Subtotal: <span class="pull-right">$ @Model.SubTotal</span><br />
+                            Shipping: <span class="pull-right">$ @Model.Shipping</span><br />
+                            Taxes: <span class="pull-right">$ @Model.Taxes</span><br />
+                            Amount Charged: <span class="pull-right"><span style="text-decoration:underline; color: #ff9016; font-size: 18px">$ @Model.FinalTotal</span></span><br />
+                        </div>
+                    </div><hr />
+
+                    <div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016">Shipping Address</div>
+                        <div>
+                            @Model.Customer.FullName <br />
+                            @Model.Address <br />
+                            @Model.City, @Model.State.Abbreviation @Model.Zipcode<br />
+                        </div>
+                    </div><hr />
+
+                    <div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016">Carrier</div>
+                        <div>
+                            UPS
+                        </div>
+                    </div><hr />
+
+                    @*<div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016">Tracking #</div>
+                        <div>
+                            AZX3355FD53
+                        </div>
+                    </div><hr />*@
+
+                    <div class="shipment">
+                        <div class="shipment-title" style="color: #ff9016">Order #</div>
+                        <div>
+                            @Model.Id
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--Support Close-->
+
+<section class="catalog-grid">
+    <div class="container">
+        <h2 class="light-weight uppercase" style="color: black">Items in this Order</h2>
+        <hr />
+        <div class="row">
+            @foreach (var item in Model.OrderItems)
+            {
+                <!--Tile-->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="tile">
+                        <div class="badges">
+                            <span class="sale">QTY: @item.Quantity</span>
+                        </div>
+                        @if (item.Quantity > 1)
+                        {
+                            <div class="price-label">$ @item.TotalPrice</div>
+                            <div class="price-label old-price" style="text-decoration:none">$ @item.UnitPrice per</div>
+                        }
+                        else
+                        {
+                            <div class="price-label">$ @item.TotalPrice</div>
+                        }
+                        <a href="@Url.Action("Details", "Items", new { id = item.ItemId })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                            <img src="@item.Item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);"/>
+                            <span class="tile-overlay"></span>
+                        </a>
+                        <div class="footer" style="height: 150px;max-height: 150px;overflow-y: auto">
+                            <a href="@Url.Action("Details", "Items", new { id = item.ItemId })">@item.Item.Name</a>
+                            <span>@Html.Raw(item.Item.Description)</span>
+                        </div>
+                    </div>
+                </div>           
+            }
+        </div>
+    </div>
+</section>

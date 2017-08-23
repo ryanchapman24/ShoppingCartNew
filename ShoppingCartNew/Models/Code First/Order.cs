@@ -15,7 +15,7 @@ namespace ShoppingCartNew.Models.Code_First
         public DateTime OrderDate { get; set; }
         public DateTime EstimatedDelivery { get; set; }
         public string CustomerId { get; set; }
-        public int CreditCardId { get; set; }
+        public int? CreditCardId { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Shipping { get; set; }
         public decimal Taxes { get; set; }
@@ -23,35 +23,36 @@ namespace ShoppingCartNew.Models.Code_First
 
         public virtual ApplicationUser Customer { get; set; }
         public virtual State State { get; set; }
+        public virtual CreditCard CreditCard { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public int? DeliveryStage
         {
             get
             {
-                if ((EstimatedDelivery - OrderDate).Days == 4)
+                if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 4)
                 {
                     return 1;
                 }
-                else if ((EstimatedDelivery - OrderDate).Days == 3)
+                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 3)
                 {
                     return 2;
                 }
-                else if ((EstimatedDelivery - OrderDate).Days == 2)
+                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 2)
                 {
                     return 3;
                 }
-                else if ((EstimatedDelivery - OrderDate).Days == 1)
+                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 1)
                 {
                     return 4;
                 }
-                else if ((EstimatedDelivery - OrderDate).Days == 0)
+                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 0)
                 {
                     return 5;
                 }
                 else
                 {
-                    return 1;
+                    return 5;
                 }
             }
         }

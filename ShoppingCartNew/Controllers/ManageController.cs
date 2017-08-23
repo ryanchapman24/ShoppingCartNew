@@ -52,12 +52,16 @@ namespace ShoppingCartNew.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(ManageMessageId? message, bool? oC)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-
-            ViewBag.MyCards = user.CreditCards.ToList();
-            ViewBag.MyOrders = user.Orders.ToList();
+            ViewBag.OC = false;
+            if (oC == true)
+            {
+                ViewBag.OC = true;
+            }
+            ViewBag.MyCards = user.CreditCards.Where(c => c.Deleted == false).OrderByDescending(c => c.Id).ToList();
+            ViewBag.MyOrders = user.Orders.OrderByDescending(o => o.Id).ToList();
             ViewBag.CardTypeId = new SelectList(db.CardTypes, "Id", "CardName");
             ViewBag.StateId = new SelectList(db.States, "Id", "StateName");
             ViewBag.MonthId = new SelectList(db.Months, "Id", "MonthName");

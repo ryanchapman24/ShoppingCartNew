@@ -11,7 +11,7 @@
                 <h2>Link a Credit Card</h2>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "CreditCards", FormMethod.Post, new { @class = "login-form" }))
+                @using (Html.BeginForm("Create", "CreditCards", new { oC = ViewBag.OC }, FormMethod.Post, new { @class = "login-form" }))
                 {
                     @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -69,17 +69,16 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade active in" id="tab01">
-                    <div class="row">
+                    <div class="row animated fadeInUp" style="animation-delay: .25s;animation-duration: .25s">
                         <!--Items List-->
                         <div class="col-lg-9 col-md-9">
                             @if (ViewBag.MyCards.Count > 0)
                             {
-                                <h2 class="title">Linked Cards <button class="btn btn-primary pull-right" style="font-size: 14px" data-toggle="modal" data-target="#addCardModal">Add Card</button></h2>
+                                <h2 class="title">Linked Cards<button class="btn btn-primary pull-right" style="font-size: 14px" data-toggle="modal" data-target="#addCardModal">Add Card</button></h2>
                             }
                             else
                             {
-                                <h2 class="title">Link at Least 1 Card to Purchase Items!</h2>
-
+                                <h2 class="title">Link at Least 1 Card to Purchase Items!<button class="btn btn-primary pull-right" style="font-size: 14px" data-toggle="modal" data-target="#addCardModal">Add Card</button></h2>
                             }
                             <hr />
                             <table class="items-list">
@@ -92,12 +91,10 @@
                                         <th>Billing</th>
                                     </tr>
                                 }
-                                <!--Item-->
-
                                 @foreach (var item in ViewBag.MyCards)
                                 {
-                            <!--Item-->
-                                    <tr class="item animated fadeInLeft" style="animation-delay: .25s;animation-duration: .25s">
+                                    <!--Item-->
+                                    <tr class="item">
                                         <td class="thumb"><img class="img-thumbnail center-block" src="@item.CardType.MediaURL" alt="Lorem ipsum" /></td>
                                         @if (item.Expired == true)
                                         {
@@ -126,7 +123,7 @@
                         }
 
                         <!--Sidebar-->
-                        <div class="col-lg-3 col-md-3 animated fadeInRight" style="animation-delay: .25s;animation-duration: .25s;">
+                        <div class="col-lg-3 col-md-3">
                             <h3 style="margin-bottom: 29px">Account</h3>
                             <hr />
                             <form class="cart-sidebar" method="post">
@@ -134,11 +131,11 @@
                                     <table>
                                         <tr>
                                             <td>Password: </td>
-                                            <td class="total align-r"><a href="@Url.Action("ChangePassword")" class="btn btn-primary btn-block" style="font-size: 12px">Change Password</a></td>
+                                            <td class="total align-r"><a href="@Url.Action("ChangePassword")" class="btn btn-black btn-block" style="font-size: 12px">Change Password</a></td>
                                         </tr>
                                         <tr class="">
                                             <td>Information: </td>
-                                            <td class="align-r"><a href="#" class="btn btn-primary btn-block" style="font-size: 12px">Update Information</a></td>
+                                            <td class="align-r"><a href="#" class="btn btn-black btn-block" style="font-size: 12px">Update Information</a></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -147,52 +144,75 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tab02">
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Order Date
-                            </th>
-                            <th>
-                                Address
-                            </th>
-                            <th>
-                                City
-                            </th>
-                            <th>
-                                State
-                            </th>
-                            <th>
-                                Zip
-                            </th>
-
-                            <th></th>
-                        </tr>
-
-                        @foreach (var item in ViewBag.MyOrders)
-                        {
-                            <tr>
-                                <td>
-                                    @item.OrderDate
-                                </td>
-                                <td>
-                                    @item.Address
-                                </td>
-                                <td>
-                                    @item.City
-                                </td>
-                                <td>
-                                    @item.State.Abbreviation
-                                </td>
-                                <td>
-                                    @item.Zipcode
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Details", "Details", "Orders", new { id = item.Id }, null)
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
+                    <div class="row animated fadeInUp" style="animation-delay: .25s;animation-duration: .25s">
+                        <!--Items List-->
+                        <div class="col-lg-12 col-md-12">
+                            @if (ViewBag.MyOrders.Count > 0)
+                            {
+                                <h2 class="title">My Orders</h2>
+                            }
+                            else
+                            {
+                                <h2 class="title">You Haven't Ordered Anything Yet!</h2>
+                            }
+                            <hr />
+                            <table class="items-list" style="max-width: 100% !important">
+                                @if (ViewBag.MyOrders.Count > 0)
+                                {
+                                    <tr>
+                                        <th>Order Date</th>
+                                        <th>Shipping Address</th>
+                                        <th>Items</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                }
+                                @foreach (var item in ViewBag.MyOrders)
+                                {
+                                    <!--Item-->                                   
+                                    <tr class="item">
+                                        <td class="name">@item.OrderDate</td>
+                                        <td>@item.Address<br />@item.City, @item.State.Abbreviation @item.Zipcode</td>
+                                        <td>
+                                            @{ 
+                                                int count = 0;
+                                                foreach (var orderItem in item.OrderItems)
+                                                {
+                                                    count += orderItem.Quantity;
+                                                }
+                                            }
+                                            @count
+                                        </td>
+                                        <td>
+                                            @if (item.DeliveryStage == 1)
+                                            {
+                                                <span>Processing</span>
+                                            }
+                                            @if (item.DeliveryStage == 2)
+                                            {
+                                                <span>Shipped</span>
+                                            }
+                                            @if (item.DeliveryStage == 3)
+                                            {
+                                                <span>In Transit</span>
+                                            }
+                                            @if (item.DeliveryStage == 4)
+                                            {
+                                                <span>Out For Delivery</span>
+                                            }
+                                            @if (item.DeliveryStage == 5)
+                                            {
+                                                <span>Delivered <i class="fa fa-check" style="color: #ff9016"></i></span>
+                                            }
+                                        </td>
+                                        <td>@item.FinalTotal</td>
+                                        <td><a href="@Url.Action("Details", "Orders", new { id = item.Id })" class="btn btn-primary pull-right" style="font-size: 14px">Details</a></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>                   
                 </div>
             </div>
         </div>        

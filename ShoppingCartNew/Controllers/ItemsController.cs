@@ -25,7 +25,7 @@ namespace ShoppingCartNew.Controllers
                 ViewBag.ItemType = "(Filter: " + itemType.TypeName +  ")";
             }
             ViewBag.ItemCount = myItems.Count();
-            return View(myItems);
+            return View(myItems.OrderByDescending(i => i.Id));
         }
 
         // GET: Items/SearchResults
@@ -36,7 +36,7 @@ namespace ShoppingCartNew.Controllers
             {
                 return View(db.Items.Where(i => i.Id == 0).ToList());
             }
-            return View(db.Items.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).ToList());
+            return View(db.Items.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).OrderByDescending(i => i.Id).ToList());
         }
 
         // GET: Items/Details/5

@@ -28,8 +28,8 @@
                             </div>
                             <div class="price-label">$ @item.SalePrice</div>
                             <div class="price-label old-price">$ @item.Price</div>
-                            <a href="@Url.Action("Details", new { id = item.Id })">
-                                <img src="@item.MediaURL" alt="1" />
+                            <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
                                 <span class="tile-overlay"></span>
                             </a>
                             <div class="footer">
@@ -50,8 +50,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="tile">
                             <div class="price-label">$ @item.Price</div>
-                            <a href="@Url.Action("Details", new { id = item.Id })">
-                                <img src="@item.MediaURL" alt="1" />
+                            <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
                                 <span class="tile-overlay"></span>
                             </a>
                             <div class="footer">

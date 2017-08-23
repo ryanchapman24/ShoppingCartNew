@@ -18,6 +18,7 @@ namespace ShoppingCartNew.Models.Code_First
         public int StateId { get; set; }
         public string Zipcode { get; set; }
         public string CustomerId { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual CardType CardType { get; set; }
         public virtual Month Month { get; set; }

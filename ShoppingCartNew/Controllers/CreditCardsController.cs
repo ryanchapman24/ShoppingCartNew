@@ -12,56 +12,28 @@ using Microsoft.AspNet.Identity;
 
 namespace ShoppingCartNew.Controllers
 {
-    public class CreditCardsController : Controller
+    [Authorize]
+    public class CreditCardsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: CreditCards
-        //public ActionResult Index()
-        //{
-        //    var user = db.Users.Find(User.Identity.GetUserId());
-
-        //    return View(user.CreditCards.ToList());
-        //}
-
-        // GET: CreditCards/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    CreditCard creditCard = db.CreditCards.Find(id);
-        //    if (creditCard == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(creditCard);
-        //}
-
-        // GET: CreditCards/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.CardTypeId = new SelectList(db.CardTypes, "Id", "CardName");
-        //    ViewBag.MonthId = new SelectList(db.Months, "Id", "MonthName");
-        //    ViewBag.YearId = new SelectList(db.Years, "Id", "YearName");
-        //    return View();
-        //}
-
         // POST: CreditCards/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CardTypeId,CardNumber,CVC,MonthId,YearId,Address,City,StateId,Zipcode,CustomerId")] CreditCard creditCard)
+        public ActionResult Create([Bind(Include = "Id,CardTypeId,CardNumber,CVC,MonthId,YearId,Address,City,StateId,Zipcode,Deleted,CustomerId")] CreditCard creditCard, bool oC)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
 
             if (ModelState.IsValid)
             {
                 creditCard.CustomerId = user.Id;
+                creditCard.Deleted = false;
                 db.CreditCards.Add(creditCard);
                 db.SaveChanges();
+                if (oC == true)
+                {
+                    return RedirectToAction("Create", "Orders");
+                }
                 return RedirectToAction("Index","Manage");
             }
 
@@ -98,7 +70,7 @@ namespace ShoppingCartNew.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CardTypeId,CardNumber,CVC,MonthId,YearId,Address,City,StateId,Zipcode,CustomerId")] CreditCard creditCard)
+        public ActionResult Edit([Bind(Include = "Id,CardTypeId,CardNumber,CVC,MonthId,YearId,Address,City,StateId,Zipcode,Deleted,CustomerId")] CreditCard creditCard)
         {
             if (ModelState.IsValid)
             {
@@ -114,28 +86,13 @@ namespace ShoppingCartNew.Controllers
             return View(creditCard);
         }
 
-        // GET: CreditCards/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    CreditCard creditCard = db.CreditCards.Find(id);
-        //    if (creditCard == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(creditCard);
-        //}
-
         // POST: CreditCards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             CreditCard creditCard = db.CreditCards.Find(id);
-            db.CreditCards.Remove(creditCard);
+            creditCard.Deleted = true;
             db.SaveChanges();
             return RedirectToAction("Index","Manage");
         }

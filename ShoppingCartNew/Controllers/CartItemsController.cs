@@ -23,27 +23,6 @@ namespace ShoppingCartNew.Controllers
             return View(user.CartItems.OrderBy(i => i.Id));
         }
 
-        // GET: CartItems/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    CartItem cartItem = db.CartItems.Find(id);
-        //    if (cartItem == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(cartItem);
-        //}
-
-        // GET: CartItems/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
         // POST: CartItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -86,52 +65,6 @@ namespace ShoppingCartNew.Controllers
 
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
-
-        // GET: CartItems/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    CartItem cartItem = db.CartItems.Find(id);
-        //    if (cartItem == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(cartItem);
-        //}
-
-        // POST: CartItems/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,ItemId,Count,CustomerId,Created")] CartItem cartItem)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(cartItem).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(cartItem);
-        //}
-
-        // GET: CartItems/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    CartItem cartItem = db.CartItems.Find(id);
-        //    if (cartItem == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(cartItem);
-        //}
 
         // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -185,18 +118,6 @@ namespace ShoppingCartNew.Controllers
                 db.SaveChanges();
                 number++;
             }
-
-            //foreach (var val in quantities)
-            //{
-            //    int index = val.IndexOf("-");
-            //    string itemId = val.Substring(0, index);
-            //    string quantity = val.Substring(index + 1, val.Length);
-            //    int iId = Convert.ToInt32(itemId);
-            //    int q = Convert.ToInt32(quantity);
-            //    var item = db.CartItems.Find(iId);
-            //    item.Count = q;
-            //    db.SaveChanges();
-            //}
 
             return RedirectToAction("Index");
         }
