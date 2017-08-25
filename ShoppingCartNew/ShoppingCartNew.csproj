@@ -212,6 +212,7 @@
     <Compile Include="Models\Code First\OrderItem.cs" />
     <Compile Include="Models\Code First\CartItem.cs" />
     <Compile Include="Models\Code First\State.cs" />
+    <Compile Include="Models\Code First\View.cs" />
     <Compile Include="Models\Code First\Year.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageUploadValidator.cs" />
@@ -520,6 +521,8 @@
     <Content Include="assets\less\variables.less" />
     <Content Include="assets\less\widgets.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

@@ -64,5 +64,6 @@ namespace ShoppingCartNew.Models
         public DbSet<State> States { get; set; }
         public DbSet<Month> Months { get; set; }
         public DbSet<Year> Years { get; set; }
+        public DbSet<View> Views { get; set; }
     }
 }

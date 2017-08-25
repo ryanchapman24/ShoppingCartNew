@@ -38,7 +38,7 @@ namespace ShoppingCartNew.Controllers
             {
                 return View(myItems.Where(i => i.Id == 0).ToList());
             }
-            return View(myItems.Where(i => i.Name.Contains(search) || i.ItemType.TypeName.Contains(search) || i.Description.Contains(search)).OrderByDescending(i => i.Id).ToList());
+            return View(myItems.Where(i => i.Name.ToLower().Contains(search.ToLower()) || i.ItemType.TypeName.ToLower().Contains(search.ToLower()) || i.Description.ToLower().Contains(search.ToLower())).OrderByDescending(i => i.Id).ToList());
         }
 
         // GET: Items/Details/5
@@ -53,6 +53,12 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
+            item.Views = item.Views + 1;
+            View view = new View();
+            view.Created = System.DateTime.Now;
+            view.ItemId = id.Value;
+            db.Views.Add(view);
+            db.SaveChanges();
             return View(item);
         }
 
@@ -78,10 +84,6 @@ namespace ShoppingCartNew.Controllers
                 var defaultMedia = "/assets/img/catalog/1.png";
                 if (ImageUploadValidator.IsWebFriendlyImage(image))
                 {
-                    //var fileName = Path.GetFileName(image.FileName);
-                    //image.SaveAs(Path.Combine(Server.MapPath("~/ProfilePics/"), fileName));
-                    //iPic = "/ProfilePics/" + fileName;
-
                     //Counter
                     var num = 0;
                     //Gets Filename without the extension
@@ -116,6 +118,7 @@ namespace ShoppingCartNew.Controllers
                     item.OnSale = false;
                 }
                 item.Deleted = false;
+                item.Views = 0;
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -151,22 +154,11 @@ namespace ShoppingCartNew.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Items.Attach(item);
-                db.Entry(item).Property("Updated").IsModified = true;
-                db.Entry(item).Property("Name").IsModified = true;
-                db.Entry(item).Property("Price").IsModified = true;
-                db.Entry(item).Property("MediaURL").IsModified = true;
-                db.Entry(item).Property("Description").IsModified = true;
-                db.Entry(item).Property("OnSale").IsModified = true;
-                db.Entry(item).Property("SalePrice").IsModified = true;
+                db.Entry(item).State = EntityState.Modified;
 
                 var iPic = item.MediaURL;
                 if (ImageUploadValidator.IsWebFriendlyImage(image))
                 {
-                    //var fileName = Path.GetFileName(image.FileName);
-                    //image.SaveAs(Path.Combine(Server.MapPath("~/ProfilePics/"), fileName));
-                    //iPic = "/ProfilePics/" + fileName;
-
                     //Counter
                     var num = 0;
                     //Gets Filename without the extension
@@ -231,6 +223,10 @@ namespace ShoppingCartNew.Controllers
         {
             Item item = db.Items.Find(id);
             item.Deleted = true;
+            // If Actually Deleting Item
+            //var absPath = Server.MapPath("~" + item.MediaURL);
+            //System.IO.File.Delete(absPath);
+            //db.Items.Remove(item);
             db.SaveChanges();
             foreach (var cart in db.CartItems.Where(c => c.ItemId == id).ToList())
             {
