@@ -73,11 +73,11 @@
             @Html.AntiForgeryToken()
             <div class="container">
                 <div class="close-search"><i class="icon-delete"></i></div>
-                    <div class="form-group">
-                        <label class="sr-only" for="search-hd">Search for product</label>
-                        <input type="text" class="form-control" name="search" id="search-hd" placeholder="Search for product">
-                        <button type="submit"><i class="icon-magnifier"></i></button>
-                    </div>
+                <div class="form-group">
+                    <label class="sr-only" for="search-hd">Search for product</label>
+                    <input type="text" class="form-control" name="search" id="search-hd" placeholder="Search for product">
+                    <button type="submit"><i class="icon-magnifier"></i></button>
+                </div>
             </div>
         }
 
@@ -245,7 +245,7 @@
                             int lItems = 0;
                             foreach (var item in ViewBag.Latest)
                             {
-                                <li>@item.Created.ToString("MMMM"), @item.Created.Day <a href="@Url.Action("Details","Items", new { id = item.Id })" style="margin-left: 10px">@item.Name</a></li>
+                                <li>@item.Created.ToString("MMMM"), @item.Created.Day <a href="@Url.Action("Details","Items", new { id = item.Id })" style="margin-left: 10px" class="light-weight uppercase">@item.Name</a></li>
                                 lItems++;
                                 if (lItems == 7) { break; }
                             }

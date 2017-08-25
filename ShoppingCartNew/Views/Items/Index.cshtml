@@ -34,10 +34,9 @@
                             </a>
                             <div class="footer">
                                 <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
-                                @*<span>@item.Description</span>*@
                                 @using (Html.BeginForm("Create", "CartItems", new { id = item.Id },FormMethod.Post))
                                 {
-                                @Html.AntiForgeryToken()
+                                    @Html.AntiForgeryToken()
                                     <input type="submit" class="btn btn-primary" value="Add to Cart" />
                                 }
                             </div>
@@ -56,7 +55,6 @@
                             </a>
                             <div class="footer">
                                 <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
-                                @*<span>@item.Description</span>*@
                                 @using (Html.BeginForm("Create", "CartItems", new { id = item.Id }, FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()

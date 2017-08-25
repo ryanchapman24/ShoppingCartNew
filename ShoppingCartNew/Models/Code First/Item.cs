@@ -38,7 +38,7 @@ namespace ShoppingCartNew.Models.Code_First
                 }
             }
         }
-        public int Views
+        public int? Views
         {
             get
             {

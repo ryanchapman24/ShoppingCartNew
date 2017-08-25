@@ -1,0 +1,180 @@
+﻿@model IEnumerable<ShoppingCartNew.Models.Code_First.Item>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!--Hero Slider-->
+<section class="hero-slider">
+    <div class="master-slider" id="hero-slider">
+
+        <!--Slide 1-->
+        <div class="ms-slide" data-delay="7">
+            <div class="overlay"></div>
+            <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/fashion-model-blonde-city-street-wallpaper-1.jpg" alt="" />
+            <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Jackets</h2>
+            <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad">Check out our extensive collection of men and women's modern jackets for urban or city life. </p>
+            <div style="left: 110px; top: 300px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 1 })">Shop Now</a></div>
+            @*<div style="left: 350px; top: 300px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
+        </div>
+
+        <!--Slide 2-->
+        <div class="ms-slide" data-delay="7">
+            <span class="overlay"></span>
+            <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/mvmt-watches.jpg" alt="Necessaire" />
+            <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Watches</h2>
+            <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">Our watches are always of the highest quality. The watch game has evolved. You should too. Get with the times. See what I did there? </p>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 2 })">Shop Now</a></div>
+            @*<div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
+        </div>
+
+        <!--Slide 3-->
+        <div class="ms-slide" data-delay="7">
+            <div class="overlay"></div>
+            <img src="~/assets/masterslider/blank.gif" data-src="/assets/img/hero/slideshow/black-men-standing-in-the-rain-waiting-for-taxi-london-street-photo.jpg" alt="Crescent" />
+            <h2 style="width: 456px; left: 110px; top: 110px; color: white !important" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Hats</h2>
+            <p style="width: 456px; left: 110px; top: 210px; color: white !important" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">A cool hat is all about expressing yourself with whatever flavor that represents your unique style. Upgrade your wardrobe today! </p>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index", "Items", new { tId = 3 })">Shop Now</a></div>
+            @*<div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="@Url.Action("Index","Items")">Browse all</a></div>*@
+        </div>
+
+    </div>
+</section><!--Hero Slider Close-->
+
+<!--Categories-->
+<section class="cat-tiles">
+    <div class="container">
+        <h2>Browse Categories</h2>
+        <div class="row">
+            @foreach (var item in ViewBag.ItemTypes)
+            {
+                <!--Category-->
+                <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
+                    <a href="@Url.Action("Index", "Items", new { tId = item.Id})" style="padding: 0px">
+                        @*<img src="~/assets/img/categories/1.png" alt="1" />*@
+                        <p class="light-weight uppercase" style="font-size: 26px;color: white; background-color: #b2b2b2; margin-top: 0px">@item.TypeName</p>
+                    </a>
+                </div>
+            }           
+        </div>
+    </div>
+</section><!--Categories Close--><hr />
+
+<!--Catalog Grid-->
+<section class="catalog-grid">
+    <div class="container">
+        <h2 class="dark-color">Newest From the Catalog</h2>
+        <div class="row">
+            @{
+                int processed = 0;
+                foreach (var item in ViewBag.Latest)
+                {
+                    if (item.OnSale == true)
+                    {
+                    <!--Tile-->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="tile">
+                            <div class="badges">
+                                <span class="sale">Sale</span>
+                            </div>
+                            <div class="price-label">$ @item.SalePrice</div>
+                            <div class="price-label old-price">$ @item.Price</div>
+                            <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
+                                <span class="tile-overlay"></span>
+                            </a>
+                            <div class="footer">
+                                <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
+                                @*<span>@item.Description</span>*@
+                                @using (Html.BeginForm("Create", "CartItems", new { id = item.Id }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" class="btn btn-primary" value="Add to Cart" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    else
+                    {
+                    <!--Tile-->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="tile">
+                            <div class="price-label">$ @item.Price</div>
+                            <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
+                                <span class="tile-overlay"></span>
+                            </a>
+                            <div class="footer">
+                                <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
+                                @*<span>@item.Description</span>*@
+                                @using (Html.BeginForm("Create", "CartItems", new { id = item.Id }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" class="btn btn-primary" value="Add to Cart" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    processed++;
+                    if (processed == 4) { break; };
+                }
+            }
+        </div>
+    </div>
+</section><!--Catalog Grid Close-->
+
+<!--Look Book Banner-->
+<section class="posts-widget">
+    <div class="tw-bg" style="background: #ff9016"></div>
+    <div class="container">
+        <div class="row">
+            <div class="latest-posts col-lg-12 col-md-12" style="padding-top: 30px;padding-bottom: 30px; text-align: center">
+                <h1 style="margin-top: 0px;margin-bottom:0px;color: white"><i class="fa fa-arrow-circle-down"></i><span style="padding-left: 40px;padding-right:40px">Look Book</span><i class="fa fa-arrow-circle-down"></i></h1>
+            </div>
+        </div>
+    </div>
+</section><!--Look Book Banner-->
+
+<!--Gallery Widget-->
+<section class="white-bg gallery-widget">
+    <div class="container">
+        <h2>Product Gallery</h2>
+        <div class="filters">
+            <a class="active" href="#" data-group="all">All</a>
+            @foreach (var item in @ViewBag.ItemTypes)
+            {
+                <a href="#" data-group="@item.TypeName">@item.TypeName</a>
+            }
+        </div>
+        <div class="gallery-grid">
+            @foreach(var item in Model)
+            {
+                <!--Item-->
+                <div class="gallery-item" data-groups='["@item.ItemType.TypeName"]' data-src="@item.MediaURL">
+                    <a href="@item.MediaURL">
+                        <div class="overlay"><span><i class="icon-expand"></i></span></div>
+                        <img class="img-thumbnail center-block" src="@item.MediaURL"/>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section><!--Gallery Widget Close-->
+
+<!--Brands Carousel Widget-->
+<section class="brand-carousel">
+    <div class="container">
+        <h2>Brands in Our Shop</h2>
+        <div class="inner">
+            <a class="item" href="https://www.vans.com/" target="_blank"><img src="~/assets/img/brands/vans_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://crooksncastles.com/" target="_blank"><img src="~/assets/img/brands/crooks_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://www.nike.com/" target="_blank"><img src="~/assets/img/brands/nike_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://www.mvmtwatches.com/" target="_blank"><img src="~/assets/img/brands/mvmt_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://www.stance.com/" target="_blank"><img src="~/assets/img/brands/stance_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://www.adidas.com/us/" target="_blank"><img src="~/assets/img/brands/adidas_logo.jpg" alt="1" /></a>
+            <a class="item" href="https://kobebryant.com/" target="_blank"><img src="~/assets/img/brands/kobe_logo.jpg" alt="1" /></a>
+        </div>
+    </div>
+</section><!--Brands Carousel Close-->

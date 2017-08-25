@@ -1,0 +1,46 @@
+﻿<section class="catalog-single">
+    <div class="container">
+        <h2>About</h2>
+        <hr /><br />
+        <h3>Where are we located?</h3>
+        <div class="row" style="padding-right: 10px; padding-left: 10px">
+            <div style="">
+                <div id="map1" class="col-md-6 col-sm-12" style="height: 400px"></div>
+            </div>
+            <div style="">
+                <div id="map2" class="col-md-6 col-sm-12" style="height: 400px"></div>
+            </div>
+            @*<div>
+                <iframe class="col-md-12" src="@string.Format("{0}","https://www.google.com/maps/@36.0967689,-80.0721779,3a,75y,244.53h,70.23t/data=!3m8!1e1!3m6!1sAF1QipNGxbWb37vBax2d2a48MR9wxafL5DjVvsF1y1p7!2e10!3e12!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipNGxbWb37vBax2d2a48MR9wxafL5DjVvsF1y1p7%3Dw203-h100-p-k-no-pi-2.9338646-ya91.50001-ro0-fo100!7i5476!8i2738")" style="height: 800px"></iframe>
+            </div>*@
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDea7TZRzp3DBJZoW83spi9hvQ_tu_2Grk&callback=initMap">
+    </script>
+    <script>
+          function initMap() {
+            var uluru = { lat: 36.0966952, lng: -80.0722239 };
+            var map1 = new google.maps.Map(document.getElementById('map1'), {
+              zoom: 6,
+              center: uluru
+            });
+            var map2 = new google.maps.Map(document.getElementById('map2'), {
+                zoom: 19,
+                center: uluru,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            });
+            var marker = new google.maps.Marker({
+              position: uluru,
+              map: map1
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map2
+            });
+          }
+    </script>
+}

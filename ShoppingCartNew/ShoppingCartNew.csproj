@@ -520,6 +520,8 @@
     <Content Include="assets\less\type.less" />
     <Content Include="assets\less\variables.less" />
     <Content Include="assets\less\widgets.less" />
+    <None Include="Properties\PublishProfiles\EVOLVE-ecommerce - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\EVOLVE-ecommerce - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -807,7 +809,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51363</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51363/</IISUrl>
+          <IISUrl>http://localhost:34567/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

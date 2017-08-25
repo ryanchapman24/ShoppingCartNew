@@ -1,0 +1,271 @@
+﻿@model IEnumerable<ShoppingCartNew.Models.Code_First.Item>
+<script src="~/Scripts/Chart.js"></script>
+<section class="shopping-cart">
+    <div class="container">
+        <div class="tabs-widget">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab01" data-toggle="tab" aria-expanded="true">Statistics</a></li>
+                <li class=""><a href="#tab02" data-toggle="tab" aria-expanded="false">Deleted Items</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="tab01">
+                    <div>
+                        <div class="row" style="padding-top: 20px;padding-bottom: 20px; margin-left: 0px; margin-right: 0px">
+                            <div class="col-md-6 col-sm-12">
+                                <canvas id="orders" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInLeft"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("orders"), {
+                                        type: 'bar',
+                                        data: {
+                                        labels: ['@ViewBag.MonthsAgo6', '@ViewBag.MonthsAgo5', '@ViewBag.MonthsAgo4', '@ViewBag.MonthsAgo3', '@ViewBag.MonthsAgo2', '@ViewBag.LastMonth', '@ViewBag.ThisMonth'],
+                                            datasets: [
+                                                {
+                                                    label: "Orders",
+                                                    backgroundColor: ["#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016"],
+                                                data: [@ViewBag.OrdersMonthsAgo6, @ViewBag.OrdersMonthsAgo5, @ViewBag.OrdersMonthsAgo4, @ViewBag.OrdersMonthsAgo3, @ViewBag.OrdersMonthsAgo2, @ViewBag.OrdersLastMonth, @ViewBag.OrdersThisMonth]
+                                                }
+                                            ]
+                                        },
+                                        options: {
+                                            legend: { display: false },
+                                            title: {
+                                                display: true,
+                                                text: 'ORDERS'
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        callback: function (value) { if (value % 1 === 0) { return value; } }
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });                        
+                                </script> 
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <canvas id="sales" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInRight"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("sales"), {
+                                        type: 'bar',
+                                        data: {
+                                        labels: ['@ViewBag.MonthsAgo6', '@ViewBag.MonthsAgo5', '@ViewBag.MonthsAgo4', '@ViewBag.MonthsAgo3', '@ViewBag.MonthsAgo2', '@ViewBag.LastMonth', '@ViewBag.ThisMonth'],
+                                            datasets: [
+                                                {
+                                                    label: "$",
+                                                    backgroundColor: ["#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65"],
+                                                data: [@ViewBag.SalesMonthsAgo6, @ViewBag.SalesMonthsAgo5, @ViewBag.SalesMonthsAgo4, @ViewBag.SalesMonthsAgo3, @ViewBag.SalesMonthsAgo2, @ViewBag.SalesLastMonth, @ViewBag.SalesThisMonth]
+                                                }
+                                            ]
+                                        },
+                                        options: {
+                                            legend: { display: false },
+                                            title: {
+                                                display: true,
+                                                text: 'SALES'
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        callback: function (value) { if (value % 1 === 0) { return value; } }
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                </script>    
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row" style="padding-top: 20px;padding-bottom: 20px; margin-left: 0px; margin-right: 0px">
+                            <div class="col-md-12">
+                                <canvas id="views" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInUp"></canvas>
+                                <script>
+                                        new Chart(document.getElementById("views"), {
+                                            type: 'line',
+                                            data: {
+                                                labels: ['@ViewBag.DaysAgo6', '@ViewBag.DaysAgo5', '@ViewBag.DaysAgo4', '@ViewBag.DaysAgo3', '@ViewBag.DaysAgo2', '@ViewBag.Yesterday', '@ViewBag.Today'],
+                                                datasets: [
+                                                    {
+                                                        data: [@ViewBag.ViewsDaysAgo6, @ViewBag.ViewsDaysAgo5, @ViewBag.ViewsDaysAgo4, @ViewBag.ViewsDaysAgo3, @ViewBag.ViewsDaysAgo2, @ViewBag.ViewsYesterday, @ViewBag.ViewsToday],
+                                                        label: "Views",
+                                                        borderColor: "#ff9016",
+                                                        fill: false
+                                                    },
+                                                    {
+                                                        data: [@ViewBag.PurchasesDaysAgo6, @ViewBag.PurchasesDaysAgo5, @ViewBag.PurchasesDaysAgo4, @ViewBag.PurchasesDaysAgo3, @ViewBag.PurchasesDaysAgo2, @ViewBag.PurchasesYesterday, @ViewBag.PurchasesToday],
+                                                        label: "Purchases",
+                                                        borderColor: "#85bb65",
+                                                        fill: false
+                                                    },
+                                                ]
+                                            },
+                                            options: {
+                                                legend: { display: true },
+                                                title: {
+                                                    display: true,
+                                                    text: 'ITEM STATS THIS WEEK'
+                                                },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true,
+                                                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                </script>
+                            </div>
+                            <br />
+                            <hr />
+                        </div>
+                        <hr />
+                        <div class="row" style="padding-top: 20px;padding-bottom: 20px; margin-left: 0px; margin-right: 0px">
+                            <div class="col-md-6 col-sm-12">
+                                <canvas id="mostViewed" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInLeft"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("mostViewed"), {
+                                        type: 'horizontalBar',
+                                        data: {
+                                          labels: ['@ViewBag.ItemViewedName1', '@ViewBag.ItemViewedName2', '@ViewBag.ItemViewedName3', '@ViewBag.ItemViewedName4', '@ViewBag.ItemViewedName5', '@ViewBag.ItemViewedName6', '@ViewBag.ItemViewedName7', '@ViewBag.ItemViewedName8', '@ViewBag.ItemViewedName9', '@ViewBag.ItemViewedName10'],
+                                          datasets: [
+                                            {
+                                              label: "Total Views",
+                                              backgroundColor: ["#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016"],
+                                              data: [@ViewBag.ItemViewed1,@ViewBag.ItemViewed2,@ViewBag.ItemViewed3,@ViewBag.ItemViewed4,@ViewBag.ItemViewed5, @ViewBag.ItemViewed6, @ViewBag.ItemViewed7, @ViewBag.ItemViewed8, @ViewBag.ItemViewed9, @ViewBag.ItemViewed10]
+                                            }
+                                          ]
+                                        },
+                                        options: {
+                                          legend: { display: false },
+                                          title: {
+                                            display: true,
+                                            text: 'TOP 10 ITEMS VIEWED (ALL-TIME)'
+                                          },
+                                          scales: {
+                                              xAxes: [{
+                                                  ticks: {
+                                                      beginAtZero: true,
+                                                      callback: function (value) { if (value % 1 === 0) { return value; } }
+                                                  }
+                                              }]
+                                          }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <canvas id="mostBought" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInRight"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("mostBought"), {
+                                        type: 'horizontalBar',
+                                        data: {
+                                          labels: ['@ViewBag.ItemBoughtName1', '@ViewBag.ItemBoughtName2', '@ViewBag.ItemBoughtName3', '@ViewBag.ItemBoughtName4', '@ViewBag.ItemBoughtName5', '@ViewBag.ItemBoughtName6', '@ViewBag.ItemBoughtName7', '@ViewBag.ItemBoughtName8', '@ViewBag.ItemBoughtName9', '@ViewBag.ItemBoughtName10'],                                          datasets: [
+                                            {
+                                              label: "Total Purchases",
+                                              backgroundColor: ["#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65","#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65"],
+                                              data: [@ViewBag.ItemBought1,@ViewBag.ItemBought2,@ViewBag.ItemBought3,@ViewBag.ItemBought4,@ViewBag.ItemBought5, @ViewBag.ItemBought6, @ViewBag.ItemBought7, @ViewBag.ItemBought8, @ViewBag.ItemBought9, @ViewBag.ItemBought10]
+                                            }
+                                          ]
+                                        },
+                                        options: {
+                                          legend: { display: false },
+                                          title: {
+                                            display: true,
+                                            text: 'TOP 10 ITEMS BOUGHT (ALL-TIME)'
+                                          },
+                                          scales: {
+                                              xAxes: [{
+                                                  ticks: {
+                                                      beginAtZero: true,
+                                                      callback: function (value) { if (value % 1 === 0) { return value; } }
+                                                  }
+                                              }]
+                                          }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab02">
+                    <section class="catalog-grid">
+                        <div class="container">
+                            <h5 style="line-height: 36px">
+                                @ViewBag.ItemCount @if (ViewBag.ItemCount > 1 || ViewBag.ItemCount == 0)
+                                {<span>Items</span> }
+                                else
+                                {<span>Item</span>} @if (User.IsInRole("Admin"))
+                                {<button class="btn btn-primary pull-right" onclick='location.href="@Url.Action("Create", "Items")"' style="font-size: 14px">Add Item</button>}
+                            </h5>
+                            @*<div class="sorting">
+                                <a href="#">Sort by name</a>
+                                <a href="#">Sort by price</a>
+                            </div>*@
+                            <hr />
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.OnSale == true)
+                                    {
+                                        <!--Tile-->
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <div class="tile">
+                                                <div class="badges">
+                                                    <span class="sale">Sale</span>
+                                                </div>
+                                                <div class="price-label">$ @item.SalePrice</div>
+                                                <div class="price-label old-price">$ @item.Price</div>
+                                                <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                                    <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
+                                                    <span class="tile-overlay"></span>
+                                                </a>
+                                                <div class="footer">
+                                                    <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
+                                                    @*<span>@item.Description</span>*@
+                                                    @using (Html.BeginForm("BringBackItem", "Admin", new { id = item.Id }, FormMethod.Post))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="submit" class="btn btn-primary" value="Return to Catalog" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <!--Tile-->
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <div class="tile">
+                                                <div class="price-label">$ @item.Price</div>
+                                                <a href="@Url.Action("Details", "Items", new { id = item.Id })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                                    <img src="@item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
+                                                    <span class="tile-overlay"></span>
+                                                </a>
+                                                <div class="footer">
+                                                    <a href="@Url.Action("Details", new { id = item.Id })">@item.Name</a>
+                                                    @*<span>@item.Description</span>*@
+                                                    @using (Html.BeginForm("BringBackItem", "Admin", new { id = item.Id }, FormMethod.Post))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="submit" class="btn btn-primary" value="Return To Catalog" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

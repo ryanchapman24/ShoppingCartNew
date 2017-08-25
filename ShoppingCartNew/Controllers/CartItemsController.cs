@@ -29,7 +29,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int? id, int? quantity)
+        public ActionResult Create(int? id, int? quantity, string search)
         {
             int increment = 1;
             if (id == null)
@@ -50,6 +50,10 @@ namespace ShoppingCartNew.Controllers
                 var existingCartItem = db.CartItems.Where(i => i.CustomerId == user.Id).FirstOrDefault(i => i.ItemId == id.Value);
                 existingCartItem.Count += increment;
                 db.SaveChanges();
+                if (search != null)
+                {
+                    return RedirectToAction("SearchResults","Items", new { search = search });
+                }
                 return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
             }
             else
@@ -62,7 +66,10 @@ namespace ShoppingCartNew.Controllers
                 db.CartItems.Add(cartItem);
                 db.SaveChanges();
             }
-
+            if (search != null)
+            {
+                return RedirectToAction("SearchResults", "Items", new { search = search });
+            }
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 

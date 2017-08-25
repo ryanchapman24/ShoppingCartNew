@@ -34,7 +34,7 @@ namespace ShoppingCartNew.Controllers
             ViewBag.SearchAttempt = search;
             var myItems = db.Items.Where(i => i.Deleted == false).ToList();
 
-            if (search == "")
+            if (search == "" || search == null)
             {
                 return View(myItems.Where(i => i.Id == 0).ToList());
             }

@@ -30,23 +30,23 @@ namespace ShoppingCartNew.Models.Code_First
         {
             get
             {
-                if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 4)
+                if ((EstimatedDelivery.Date - System.DateTime.Now.Date).Days == 4)
                 {
                     return 1;
                 }
-                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 3)
+                else if ((EstimatedDelivery.Date - System.DateTime.Now.Date).Days == 3)
                 {
                     return 2;
                 }
-                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 2)
+                else if ((EstimatedDelivery.Date - System.DateTime.Now.Date).Days == 2)
                 {
                     return 3;
                 }
-                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 1)
+                else if ((EstimatedDelivery.Date - System.DateTime.Now.Date).Days == 1)
                 {
                     return 4;
                 }
-                else if ((EstimatedDelivery - System.DateTime.Now.AddDays(-1)).Days == 0)
+                else if ((EstimatedDelivery.Date - System.DateTime.Now.Date).Days == 0)
                 {
                     return 5;
                 }

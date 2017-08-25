@@ -1,0 +1,220 @@
+﻿@model ShoppingCartNew.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="modal fade" id="addCardModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h2>Link a Credit Card</h2>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "CreditCards", new { oC = ViewBag.OC }, FormMethod.Post, new { @class = "login-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group group">
+                            <label>Card Type</label>
+                            @Html.DropDownList("CardTypeId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="form-group group">
+                            <label>Card Number</label>
+                            <input type="text" class="form-control" name="CardNumber" required>
+                        </div>
+                        <div class="form-group group">
+                            <label>CVC</label>
+                            <input type="text" class="form-control" name="CVC" required>
+                        </div>
+                        <div class="form-group group">
+                            <label>Expire Month</label>
+                            @Html.DropDownList("MonthId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="form-group group">
+                            <label>Expire Year</label>
+                            @Html.DropDownList("YearId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="form-group group">
+                            <label>Address</label>
+                            <input type="text" class="form-control" name="Address"required>
+                        </div>
+                        <div class="form-group group">
+                            <label>City</label>
+                            <input type="text" class="form-control" name="City" required>
+                        </div>
+                        <div class="form-group group">
+                            <label>State</label>
+                            @Html.DropDownList("StateId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="form-group group">
+                            <label>Zip</label>
+                            <input type="text" class="form-control" name="Zipcode" required>
+                        </div>
+                        <input class="btn btn-primary pull-right" type="submit" value="Link"><br /><br />
+                }                                 
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+<section class="shopping-cart">
+    <div class="container">
+        <div class="tabs-widget">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab01" data-toggle="tab" aria-expanded="true">Manage</a></li>
+                <li class=""><a href="#tab02" data-toggle="tab" aria-expanded="false">Order History</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="tab01">
+                    <div class="row animated fadeInUp" style="animation-delay: .25s;animation-duration: .25s">
+                        <!--Items List-->
+                        <div class="col-lg-9 col-md-9">
+                            @if (ViewBag.MyCards.Count > 0)
+                            {
+                                <h2 class="title">Linked Cards<button class="btn btn-primary pull-right" style="font-size: 14px" data-toggle="modal" data-target="#addCardModal">Add Card</button></h2>
+                            }
+                            else
+                            {
+                                <h2 class="title">Link at Least 1 Card to Purchase Items!<button class="btn btn-primary pull-right" style="font-size: 14px" data-toggle="modal" data-target="#addCardModal">Add Card</button></h2>
+                            }
+                            <hr />
+                            <table class="items-list">
+                                @if (ViewBag.MyCards.Count > 0)
+                                {
+                                    <tr>
+                                        <th></th>
+                                        <th>Card Number</th>
+                                        <th>CVC</th>
+                                        <th>Billing</th>
+                                    </tr>
+                                }
+                                @foreach (var item in ViewBag.MyCards)
+                                {
+                                    <!--Item-->
+                                    <tr class="item">
+                                        <td class="thumb"><img class="img-thumbnail center-block" src="@item.CardType.MediaURL" alt="Lorem ipsum" /></td>
+                                        @if (item.Expired == true)
+                                        {
+                                            <td><span style="color:#ff9016; font-size: 12px"><b>EXPIRED</b></span><br />@item.CardNumber<br /><span style="font-size: 12px">EXP: @item.Month.MonthName / @item.Year.YearName</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.CardNumber<br /><span style="font-size: 12px">EXP: @item.Month.MonthName / @item.Year.YearName</span></td>
+                                        }
+                                        <td class="name"><b>@item.CVC</b></td>
+                                        <td>@item.Address<br />@item.City, @item.State.Abbreviation @item.Zipcode</td>
+                                        <td class="delete">
+                                            <a href="javascript:document.getElementById('@item.Id-deleteFromCards').submit()"><i class="icon-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        @foreach (var item in ViewBag.MyCards)
+                        {
+                            string uniqueId = item.Id + "-deleteFromCards";
+                            using (Html.BeginForm("Delete", "CreditCards", new { id = item.Id }, FormMethod.Post, new { id = uniqueId }))
+                            {
+                                @Html.AntiForgeryToken()
+                            }
+                        }
+
+                        <!--Sidebar-->
+                        <div class="col-lg-3 col-md-3">
+                            <h3 style="margin-bottom: 29px">Account</h3>
+                            <hr />
+                            <form class="cart-sidebar" method="post">
+                                <div class="cart-totals">
+                                    <table>
+                                        <tr>
+                                            <td>Password: </td>
+                                            <td class="total align-r"><a href="@Url.Action("ChangePassword")" class="btn btn-black btn-block" style="font-size: 12px">Change Password</a></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td>Information: </td>
+                                            <td class="align-r"><a href="#" class="btn btn-black btn-block" style="font-size: 12px">Update Information</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab02">
+                    <div class="row animated fadeInUp" style="animation-delay: .25s;animation-duration: .25s">
+                        <!--Items List-->
+                        <div class="col-lg-12 col-md-12">
+                            @if (ViewBag.MyOrders.Count > 0)
+                            {
+                                <h2 class="title">My Orders</h2>
+                            }
+                            else
+                            {
+                                <h2 class="title">You Haven't Ordered Anything Yet!</h2>
+                            }
+                            <hr />
+                            <table class="items-list" style="max-width: 100% !important">
+                                @if (ViewBag.MyOrders.Count > 0)
+                                {
+                                    <tr>
+                                        <th>Order Date</th>
+                                        <th>Shipping Address</th>
+                                        <th>Items</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                }
+                                @foreach (var item in ViewBag.MyOrders)
+                                {
+                                    <!--Item-->                                   
+                                    <tr class="item">
+                                        <td class="name">@item.OrderDate</td>
+                                        <td>@item.Address<br />@item.City, @item.State.Abbreviation @item.Zipcode</td>
+                                        <td>
+                                            @{ 
+                                                int count = 0;
+                                                foreach (var orderItem in item.OrderItems)
+                                                {
+                                                    count += orderItem.Quantity;
+                                                }
+                                            }
+                                            @count
+                                        </td>
+                                        <td>
+                                            @if (item.DeliveryStage == 1)
+                                            {
+                                                <span>Processing</span>
+                                            }
+                                            @if (item.DeliveryStage == 2)
+                                            {
+                                                <span>Shipped</span>
+                                            }
+                                            @if (item.DeliveryStage == 3)
+                                            {
+                                                <span>In Transit</span>
+                                            }
+                                            @if (item.DeliveryStage == 4)
+                                            {
+                                                <span>Out For Delivery</span>
+                                            }
+                                            @if (item.DeliveryStage == 5)
+                                            {
+                                                <span>Delivered <i class="fa fa-check" style="color: #ff9016"></i></span>
+                                            }
+                                        </td>
+                                        <td>@item.FinalTotal</td>
+                                        <td><a href="@Url.Action("Details", "Orders", new { id = item.Id })" class="btn btn-primary pull-right" style="font-size: 14px">Details</a></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+        </div>        
+    </div>
+</section>

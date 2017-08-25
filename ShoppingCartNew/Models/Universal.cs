@@ -23,6 +23,7 @@ namespace ShoppingCartNew.Models
                 ViewBag.LastName = user.LastName;
                 ViewBag.FullName = user.FullName;
 
+                ViewBag.TotalCartItems = user.CartItems.Sum(c => c.Count);
                 ViewBag.CartItems = user.CartItems.ToList();
                 ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
                 decimal count = 0;

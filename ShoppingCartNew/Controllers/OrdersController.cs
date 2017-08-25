@@ -34,6 +34,7 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AddressString = order.Address + ", " + order.City + ", " + order.State.Abbreviation + " " + order.Zipcode;
             return View(order);
         }
 
