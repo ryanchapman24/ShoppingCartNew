@@ -21,17 +21,6 @@ namespace ShoppingCartNew.Controllers
             var monthsAgo4 = System.DateTime.Now.AddMonths(-4);
             var monthsAgo5 = System.DateTime.Now.AddMonths(-5);
             var monthsAgo6 = System.DateTime.Now.AddMonths(-6);
-
-            var today = System.DateTime.Now;
-            var yesterday = System.DateTime.Now.AddDays(-1);
-            var daysAgo2 = System.DateTime.Now.AddDays(-2);
-            var daysAgo3 = System.DateTime.Now.AddDays(-3);
-            var daysAgo4 = System.DateTime.Now.AddDays(-4);
-            var daysAgo5 = System.DateTime.Now.AddDays(-5);
-            var daysAgo6 = System.DateTime.Now.AddDays(-6);
-
-            var delItems = db.Items.Where(i => i.Deleted == true).OrderByDescending(i => i.Id);
-
             ViewBag.ThisMonth = thisMonth.ToString("MMMM");
             ViewBag.LastMonth = lastMonth.ToString("MMMM");
             ViewBag.MonthsAgo2 = monthsAgo2.ToString("MMMM");
@@ -40,6 +29,13 @@ namespace ShoppingCartNew.Controllers
             ViewBag.MonthsAgo5 = monthsAgo5.ToString("MMMM");
             ViewBag.MonthsAgo6 = monthsAgo6.ToString("MMMM");
 
+            var today = System.DateTime.Now;
+            var yesterday = System.DateTime.Now.AddDays(-1);
+            var daysAgo2 = System.DateTime.Now.AddDays(-2);
+            var daysAgo3 = System.DateTime.Now.AddDays(-3);
+            var daysAgo4 = System.DateTime.Now.AddDays(-4);
+            var daysAgo5 = System.DateTime.Now.AddDays(-5);
+            var daysAgo6 = System.DateTime.Now.AddDays(-6);
             ViewBag.Today = today.ToString("dddd");
             ViewBag.Yesterday = yesterday.ToString("dddd");
             ViewBag.DaysAgo2 = daysAgo2.ToString("dddd");
@@ -47,7 +43,6 @@ namespace ShoppingCartNew.Controllers
             ViewBag.DaysAgo4 = daysAgo4.ToString("dddd");
             ViewBag.DaysAgo5 = daysAgo5.ToString("dddd");
             ViewBag.DaysAgo6 = daysAgo6.ToString("dddd");
-
 
             ViewBag.OrdersThisMonth = db.Orders.Where(o => o.OrderDate.Month == thisMonth.Month && o.OrderDate.Year == thisMonth.Year).Count();
             ViewBag.OrdersLastMonth = db.Orders.Where(o => o.OrderDate.Month == lastMonth.Month && o.OrderDate.Year == lastMonth.Year).Count();
@@ -162,6 +157,30 @@ namespace ShoppingCartNew.Controllers
             ViewBag.ItemViewed9 = viewList[8].Count;
             ViewBag.ItemViewed10 = viewList[9].Count;
 
+            var buyList = db.OrderItems.GroupBy(o => o.ItemId).Select(group => new { ItemId = group.Key, Quantity = group.Sum( g => g.Quantity) }).OrderByDescending(o => o.Quantity).ToArray();
+            ViewBag.ItemBoughtName1 = db.Items.Find(buyList[0].ItemId).Name;
+            ViewBag.ItemBoughtName2 = db.Items.Find(buyList[1].ItemId).Name;
+            ViewBag.ItemBoughtName3 = db.Items.Find(buyList[2].ItemId).Name;
+            ViewBag.ItemBoughtName4 = db.Items.Find(buyList[3].ItemId).Name;
+            ViewBag.ItemBoughtName5 = db.Items.Find(buyList[4].ItemId).Name;
+            ViewBag.ItemBoughtName6 = db.Items.Find(buyList[5].ItemId).Name;
+            ViewBag.ItemBoughtName7 = db.Items.Find(buyList[6].ItemId).Name;
+            ViewBag.ItemBoughtName8 = db.Items.Find(buyList[7].ItemId).Name;
+            ViewBag.ItemBoughtName9 = db.Items.Find(buyList[8].ItemId).Name;
+            ViewBag.ItemBoughtName10 = db.Items.Find(buyList[9].ItemId).Name;
+
+            ViewBag.ItemBought1 = buyList[0].Quantity;
+            ViewBag.ItemBought2 = buyList[1].Quantity;
+            ViewBag.ItemBought3 = buyList[2].Quantity;
+            ViewBag.ItemBought4 = buyList[3].Quantity;
+            ViewBag.ItemBought5 = buyList[4].Quantity;
+            ViewBag.ItemBought6 = buyList[5].Quantity;
+            ViewBag.ItemBought7 = buyList[6].Quantity;
+            ViewBag.ItemBought8 = buyList[7].Quantity;
+            ViewBag.ItemBought9 = buyList[8].Quantity;
+            ViewBag.ItemBought10 = buyList[9].Quantity;
+
+            var delItems = db.Items.Where(i => i.Deleted == true).OrderByDescending(i => i.Id);
             ViewBag.ItemCount = delItems.Count();
             return View(delItems.ToList());
         }

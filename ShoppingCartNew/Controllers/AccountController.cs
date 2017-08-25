@@ -82,7 +82,14 @@ namespace ShoppingCartNew.Controllers
                 case SignInStatus.Success:
                     if (returnUrl.StartsWith("http"))
                     {
-                        return Redirect(returnUrl);
+                        if (returnUrl.Contains("/Account/Login"))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            return Redirect(returnUrl);
+                        }
                     }
                     else if (returnUrl.Contains("/CartItems/Create/"))
                     {
