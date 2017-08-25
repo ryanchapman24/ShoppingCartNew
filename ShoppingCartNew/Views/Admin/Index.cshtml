@@ -78,14 +78,20 @@
                                                         label: "Views",
                                                         borderColor: "#ff9016",
                                                         fill: false
-                                                    }
+                                                    },
+                                                    {
+                                                        data: [@ViewBag.PurchasesDaysAgo6, @ViewBag.PurchasesDaysAgo5, @ViewBag.PurchasesDaysAgo4, @ViewBag.PurchasesDaysAgo3, @ViewBag.PurchasesDaysAgo2, @ViewBag.PurchasesYesterday, @ViewBag.PurchasesToday],
+                                                        label: "Purchases",
+                                                        borderColor: "#85bb65",
+                                                        fill: false
+                                                    },
                                                 ]
                                             },
                                             options: {
-                                                legend: { display: false },
+                                                legend: { display: true },
                                                 title: {
                                                     display: true,
-                                                    text: 'ITEM VIEWS THIS WEEK'
+                                                    text: 'ITEM STATS THIS WEEK'
                                                 }
                                             }
                                         });
@@ -95,6 +101,71 @@
                             <hr />
                         </div>
                         <hr />
+                        <div class="row" style="padding-top: 20px;padding-bottom: 20px; margin-left: 0px; margin-right: 0px">
+                            <div class="col-md-6 col-sm-12">
+                                <canvas id="mostViewed" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInLeft"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("mostViewed"), {
+                                        type: 'horizontalBar',
+                                        data: {
+                                          labels: ['@ViewBag.ItemViewedName1', '@ViewBag.ItemViewedName2', '@ViewBag.ItemViewedName3', '@ViewBag.ItemViewedName4', '@ViewBag.ItemViewedName5', '@ViewBag.ItemViewedName6', '@ViewBag.ItemViewedName7', '@ViewBag.ItemViewedName8', '@ViewBag.ItemViewedName9', '@ViewBag.ItemViewedName10'],
+                                          datasets: [
+                                            {
+                                              label: "Total Views",
+                                              backgroundColor: ["#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016", "#ff9016"],
+                                              data: [@ViewBag.ItemViewed1,@ViewBag.ItemViewed2,@ViewBag.ItemViewed3,@ViewBag.ItemViewed4,@ViewBag.ItemViewed5, @ViewBag.ItemViewed6, @ViewBag.ItemViewed7, @ViewBag.ItemViewed8, @ViewBag.ItemViewed9, @ViewBag.ItemViewed10]
+                                            }
+                                          ]
+                                        },
+                                        options: {
+                                          legend: { display: false },
+                                          title: {
+                                            display: true,
+                                            text: 'TOP 10 ITEMS VIEWED (ALL-TIME)'
+                                          },
+                                          scales: {
+                                              xAxes: [{
+                                                  ticks: {
+                                                      beginAtZero: true
+                                                  }
+                                              }]
+                                          }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                @*<canvas id="mostBought" style="height: 500px; width: 100%; animation-delay: .25s; animation-duration: .25s" class="animated fadeInRight"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("mostBought"), {
+                                        type: 'horizontalBar',
+                                        data: {
+                                          labels: ['@ViewBag.ItemBoughtName1', '@ViewBag.ItemBoughtName2', '@ViewBag.ItemBoughtName3', '@ViewBag.ItemBoughtName4', '@ViewBag.ItemBoughtName5', '@ViewBag.ItemBoughtName6', '@ViewBag.ItemBoughtName7', '@ViewBag.ItemBoughtName8', '@ViewBag.ItemBoughtName9', '@ViewBag.ItemBoughtName10'],                                          datasets: [
+                                            {
+                                              label: "Total Purchases",
+                                              backgroundColor: ["#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65","#85bb65", "#85bb65", "#85bb65", "#85bb65", "#85bb65"],
+                                              data: [@ViewBag.ItemBought1,@ViewBag.ItemBought2,@ViewBag.ItemBought3,@ViewBag.ItemBought4,@ViewBag.ItemBought5. @ViewBag.ItemBought6, @ViewBag.ItemBought7, @ViewBag.ItemBought8, @ViewBag.ItemBought9, @ViewBag.ItemBought10]
+                                            }
+                                          ]
+                                        },
+                                        options: {
+                                          legend: { display: false },
+                                          title: {
+                                            display: true,
+                                            text: 'TOP 10 ITEMS BOUGHT (ALL-TIME)'
+                                          },
+                                          scales: {
+                                              xAxes: [{
+                                                  ticks: {
+                                                      beginAtZero: true
+                                                  }
+                                              }]
+                                          }
+                                        }
+                                    });
+                                </script>*@
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tab02">

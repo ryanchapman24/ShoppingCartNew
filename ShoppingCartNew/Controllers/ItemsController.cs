@@ -53,7 +53,6 @@ namespace ShoppingCartNew.Controllers
             {
                 return HttpNotFound();
             }
-            item.Views = item.Views + 1;
             View view = new View();
             view.Created = System.DateTime.Now;
             view.ItemId = id.Value;
@@ -118,7 +117,6 @@ namespace ShoppingCartNew.Controllers
                     item.OnSale = false;
                 }
                 item.Deleted = false;
-                item.Views = 0;
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");

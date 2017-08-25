@@ -16,5 +16,13 @@ namespace ShoppingCartNew.Models.Code_First
 
         public virtual Item Item { get; set; }
         public virtual Order Order { get; set; }
+
+        public DateTime Created
+        {
+            get
+            {
+                return Order.OrderDate;
+            }
+        }
     }
 }

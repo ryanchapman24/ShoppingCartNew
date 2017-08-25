@@ -102,6 +102,65 @@ namespace ShoppingCartNew.Controllers
             ViewBag.ViewsDaysAgo5 = db.Views.Where(v => v.Created.Year == daysAgo5.Year && v.Created.Month == daysAgo5.Month && v.Created.Day == daysAgo5.Day).Count();
             ViewBag.ViewsDaysAgo6 = db.Views.Where(v => v.Created.Year == daysAgo6.Year && v.Created.Month == daysAgo6.Month && v.Created.Day == daysAgo6.Day).Count();
 
+            ViewBag.PurchasesToday = 0;
+            ViewBag.PurchasesYesterday = 0;
+            ViewBag.PurchasesDaysAgo2 = 0;
+            ViewBag.PurchasesDaysAgo3 = 0;
+            ViewBag.PurchasesDaysAgo4 = 0;
+            ViewBag.PurchasesDaysAgo5 = 0;
+            ViewBag.PurchasesDaysAgo6 = 0;
+
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == today.Year && i.Order.OrderDate.Month == today.Month && i.Order.OrderDate.Day == today.Day).Count() > 0)
+            {
+                ViewBag.PurchasesToday = db.OrderItems.Where(i => i.Order.OrderDate.Year == today.Year && i.Order.OrderDate.Month == today.Month && i.Order.OrderDate.Day == today.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == yesterday.Year && i.Order.OrderDate.Month == yesterday.Month && i.Order.OrderDate.Day == yesterday.Day).Count() > 0)
+            {
+                ViewBag.PurchasesYesterday = db.OrderItems.Where(i => i.Order.OrderDate.Year == yesterday.Year && i.Order.OrderDate.Month == yesterday.Month && i.Order.OrderDate.Day == yesterday.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo2.Year && i.Order.OrderDate.Month == daysAgo2.Month && i.Order.OrderDate.Day == daysAgo2.Day).Count() > 0)
+            {
+                ViewBag.PurchasesDaysAgo2 = db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo2.Year && i.Order.OrderDate.Month == daysAgo2.Month && i.Order.OrderDate.Day == daysAgo2.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo3.Year && i.Order.OrderDate.Month == daysAgo3.Month && i.Order.OrderDate.Day == daysAgo3.Day).Count() > 0)
+            {
+                ViewBag.PurchasesDaysAgo3 = db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo3.Year && i.Order.OrderDate.Month == daysAgo3.Month && i.Order.OrderDate.Day == daysAgo3.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo4.Year && i.Order.OrderDate.Month == daysAgo4.Month && i.Order.OrderDate.Day == daysAgo4.Day).Count() > 0)
+            {
+                ViewBag.PurchasesDaysAgo4 = db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo4.Year && i.Order.OrderDate.Month == daysAgo4.Month && i.Order.OrderDate.Day == daysAgo4.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo5.Year && i.Order.OrderDate.Month == daysAgo5.Month && i.Order.OrderDate.Day == daysAgo5.Day).Count() > 0)
+            {
+                ViewBag.PurchasesDaysAgo5 = db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo5.Year && i.Order.OrderDate.Month == daysAgo5.Month && i.Order.OrderDate.Day == daysAgo5.Day).Sum(i => i.Quantity);
+            }
+            if (db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo6.Year && i.Order.OrderDate.Month == daysAgo6.Month && i.Order.OrderDate.Day == daysAgo6.Day).Count() > 0)
+            {
+                ViewBag.PurchasesDaysAgo6 = db.OrderItems.Where(i => i.Order.OrderDate.Year == daysAgo6.Year && i.Order.OrderDate.Month == daysAgo6.Month && i.Order.OrderDate.Day == daysAgo6.Day).Sum(i => i.Quantity);
+            }
+
+            var viewList =  db.Views.GroupBy(v => v.ItemId).Select(group => new { ItemId = group.Key, Count = group.Count() }).OrderByDescending(v => v.Count).ToArray();
+            ViewBag.ItemViewedName1 = db.Items.Find(viewList[0].ItemId).Name;
+            ViewBag.ItemViewedName2 = db.Items.Find(viewList[1].ItemId).Name;
+            ViewBag.ItemViewedName3 = db.Items.Find(viewList[2].ItemId).Name;
+            ViewBag.ItemViewedName4 = db.Items.Find(viewList[3].ItemId).Name;
+            ViewBag.ItemViewedName5 = db.Items.Find(viewList[4].ItemId).Name;
+            ViewBag.ItemViewedName6 = db.Items.Find(viewList[5].ItemId).Name;
+            ViewBag.ItemViewedName7 = db.Items.Find(viewList[6].ItemId).Name;
+            ViewBag.ItemViewedName8 = db.Items.Find(viewList[7].ItemId).Name;
+            ViewBag.ItemViewedName9 = db.Items.Find(viewList[8].ItemId).Name;
+            ViewBag.ItemViewedName10 = db.Items.Find(viewList[9].ItemId).Name;
+
+            ViewBag.ItemViewed1 = viewList[0].Count;
+            ViewBag.ItemViewed2 = viewList[1].Count;
+            ViewBag.ItemViewed3 = viewList[2].Count;
+            ViewBag.ItemViewed4 = viewList[3].Count;
+            ViewBag.ItemViewed5 = viewList[4].Count;
+            ViewBag.ItemViewed6 = viewList[5].Count;
+            ViewBag.ItemViewed7 = viewList[6].Count;
+            ViewBag.ItemViewed8 = viewList[7].Count;
+            ViewBag.ItemViewed9 = viewList[8].Count;
+            ViewBag.ItemViewed10 = viewList[9].Count;
 
             ViewBag.ItemCount = delItems.Count();
             return View(delItems.ToList());
@@ -116,6 +175,15 @@ namespace ShoppingCartNew.Controllers
             item.Deleted = false;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

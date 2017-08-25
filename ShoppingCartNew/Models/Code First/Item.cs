@@ -20,9 +20,9 @@ namespace ShoppingCartNew.Models.Code_First
         public decimal? SalePrice { get; set; }
         public int ItemTypeId { get; set; }
         public bool Deleted { get; set; }
-        public int Views { get; set; }
 
         public virtual ItemType ItemType { get; set; }
+        public virtual ICollection<View> Viewings { get; set; }
 
         public decimal? SalePercent
         {
@@ -36,6 +36,13 @@ namespace ShoppingCartNew.Models.Code_First
                 {
                     return null;
                 }
+            }
+        }
+        public int Views
+        {
+            get
+            {
+                return Viewings.Count();
             }
         }
     }
