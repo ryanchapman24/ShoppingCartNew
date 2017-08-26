@@ -36,7 +36,6 @@
                 @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { id = "confirmPurchase" }))
                 {
                     @Html.AntiForgeryToken()
-
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -78,6 +77,7 @@
                                 @Html.ValidationMessageFor(model => model.Zipcode, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <input id="orderBtn" type="submit" class="btn btn-black hidden" value="test" />
                     </div>
                 }
             </div>
@@ -108,7 +108,7 @@
                         </table>
                         @if (ViewBag.CartItemsTotalCost > 0)
                         {
-                            <input class="btn btn-primary btn-block" onclick="javascript:document.getElementById('confirmPurchase').submit()" value="Confirm Purchase"/>
+                            <input class="btn btn-primary btn-block" onclick="javascript: document.getElementById('orderBtn').click()" value="Confirm Purchase"/>
                         }
                     </div>
                 </form>
@@ -116,64 +116,3 @@
         </div>
     </div>
 </section><!--Shopping Cart Close-->
-@*<div style="padding: 40px">
-    <h2>Order Submission Form</h2>
-    <hr />
-@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { id = "confirmPurchase" }))
-{
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                <label class="control-label col-md-2">Card</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("CardId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required = "true" } })
-                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", required = "true" } })
-                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("StateId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
-                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2">Zip</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Zipcode, new { htmlAttributes = new { @class = "form-control", required = "true" } })
-                    @Html.ValidationMessageFor(model => model.Zipcode, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }
-
-    <div class="pull-right">
-        @Html.ActionLink("Back to Cart", "Index", "CartItems")
-    </div>
-</div>*@
