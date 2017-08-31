@@ -13,7 +13,7 @@ namespace ShoppingCartNew.Models
     {
         public ApplicationDbContext db = new ApplicationDbContext();
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -25,7 +25,7 @@ namespace ShoppingCartNew.Models
 
                 ViewBag.TotalCartItems = user.CartItems.Sum(c => c.Count);
                 ViewBag.CartItems = user.CartItems.ToList();
-                ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
+                ViewBag.ItemTypes = db.ItemTypes.OrderBy(t => t.TypeName).ToList();
                 decimal count = 0;
                 foreach (var cartItem in user.CartItems)
                 {
@@ -41,7 +41,7 @@ namespace ShoppingCartNew.Models
                 ViewBag.CartItemsTotalCost = count;
 
                 var latestItems = new List<Item>();
-                var myItems = db.Items.AsNoTracking().Where(i => i.Deleted == false).OrderByDescending(i => i.Created).ToList();
+                var myItems = db.Items.Where(i => i.Deleted == false).OrderByDescending(i => i.Created).ToList();
                 int Litem = 0;
                 foreach (var latestItem in myItems)
                 {
@@ -50,7 +50,7 @@ namespace ShoppingCartNew.Models
                     if (Litem == 20) { break; };
                 }
                 ViewBag.Latest = latestItems;
-                var saleItems = db.Items.AsNoTracking().Where(i => i.Deleted == false && i.OnSale == true).ToList();
+                var saleItems = db.Items.Where(i => i.Deleted == false && i.OnSale == true).ToList();
                 if (saleItems.Count() > 0)
                 {
                     var biggestSale = saleItems.FirstOrDefault();
@@ -64,14 +64,14 @@ namespace ShoppingCartNew.Models
                     ViewBag.BiggestSale = biggestSale;
                 }
 
-                base.OnActionExecuting(filterContext);
+                base.OnActionExecuted(filterContext);
             }
             else
             {
-                ViewBag.ItemTypes = db.ItemTypes.AsNoTracking().OrderBy(t => t.TypeName).ToList();
+                ViewBag.ItemTypes = db.ItemTypes.OrderBy(t => t.TypeName).ToList();
 
                 var latestItems = new List<Item>();
-                var myItems = db.Items.AsNoTracking().OrderByDescending(i => i.Created).ToList();
+                var myItems = db.Items.OrderByDescending(i => i.Created).ToList();
                 int Litem = 0;
                 foreach (var latestItem in myItems)
                 {
@@ -80,7 +80,7 @@ namespace ShoppingCartNew.Models
                     if (Litem == 20) { break; };
                 }
                 ViewBag.Latest = latestItems;
-                var saleItems = db.Items.AsNoTracking().Where(i => i.OnSale == true).ToList();
+                var saleItems = db.Items.Where(i => i.OnSale == true).ToList();
                 if (saleItems.Count() > 0)
                 {
                     var biggestSale = saleItems.FirstOrDefault();

@@ -6,7 +6,18 @@
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
 </ol><!--Breadcrumbs Close-->
-
+@if (ViewBag.JustOrdered == true)
+{
+    <div class="light-weight uppercase" style="background: black; margin-bottom: 40px; text-align: center; padding: 40px">
+        <center><h2 style="color: white; font-size: 30px; border: 1px solid white; width: 300px">Order Confirmed</h2></center>
+        <h1 style="color: #ff9016; font-size: 60px">Thank you</h1>
+        <p style="color: white; font-size: 18px">
+            <span>For your business</span> <span style="color: #ff9016">|</span> 
+            <span>For your exceptional style</span> <span style="color: #ff9016">|</span>
+            <span>For being you</span>
+        </p>
+    </div>
+}
 <!--Support-->
 <section class="tracking">
     <div class="container">
@@ -348,7 +359,7 @@
 
 @section Scripts {
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDea7TZRzp3DBJZoW83spi9hvQ_tu_2Grk&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDea7TZRzp3DBJZoW83spi9hvQ_tu_2Grk">
     </script>
     <script>
         $(function () {

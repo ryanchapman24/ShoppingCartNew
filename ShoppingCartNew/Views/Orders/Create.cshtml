@@ -7,7 +7,7 @@
     var taxes = ViewBag.CartItemsTotalCost / 20;
     var total = ViewBag.CartItemsTotalCost + shipping + taxes;
 }
-<!--Empty Cart Modal-->
+<!--Cancel Order Modal-->
 <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -19,6 +19,25 @@
                 <h1 style="font-size: 14px">
                     <a href="@Url.Action("Index","CartItems")" class="btn btn-black pull-right">Yes</a>
                     <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" aria-hidden="true">No</button>
+                </h1>
+                <br /><br />
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--Submit Order Modal-->
+<div class="modal fade" id="submitOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h2>Are You Sure You Want to Finalize This Order?</h2>
+            </div>
+            <div class="modal-body">
+                <h1 style="font-size: 14px">
+                    <button type="button" class="btn btn-primary pull-right" onclick="javascript: document.getElementById('orderBtn').click()" data-dismiss="modal" aria-hidden="true">Yes</button>
+                    <button type="button" class="btn btn-black pull-right" data-dismiss="modal" aria-hidden="true">No</button>
                 </h1>
                 <br /><br />
             </div>
@@ -108,7 +127,7 @@
                         </table>
                         @if (ViewBag.CartItemsTotalCost > 0)
                         {
-                            <input class="btn btn-primary btn-block" onclick="javascript: document.getElementById('orderBtn').click()" value="Confirm Purchase"/>
+                            <input class="btn btn-primary btn-block" data-toggle="modal" data-target="#submitOrderModal" value="Confirm Purchase"/>
                         }
                     </div>
                 </form>

@@ -15,14 +15,8 @@ namespace ShoppingCartNew.Controllers
     [Authorize]
     public class OrdersController : Universal
     {
-        // GET: Orders
-        public ActionResult Index()
-        {
-            return View(db.Orders.ToList());
-        }
-
         // GET: Orders/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, bool? justOrdered)
         {
             if (id == null)
             {
@@ -33,6 +27,11 @@ namespace ShoppingCartNew.Controllers
             if (order == null || order.CustomerId != user.Id)
             {
                 return HttpNotFound();
+            }
+            ViewBag.JustOrdered = false;
+            if (justOrdered == true)
+            {
+                ViewBag.JustOrdered = true;
             }
             ViewBag.AddressString = order.Address + ", " + order.City + ", " + order.State.Abbreviation + " " + order.Zipcode;
             return View(order);
@@ -66,23 +65,34 @@ namespace ShoppingCartNew.Controllers
         public ActionResult Create([Bind(Include = "Id,Address,City,State,Zipcode,OrderDate,CustomerId,StateId,CreditCardId,SubTotal,Shipping,Taxes,FinalTotal")] Order order)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-            var shipping = ViewBag.CartItemsTotalCost / 10;
-            var taxes = ViewBag.CartItemsTotalCost / 20;
-            var total = ViewBag.CartItemsTotalCost + shipping + taxes;
+            decimal count = 0;
+            foreach (var cartItem in user.CartItems)
+            {
+                if (cartItem.Item.OnSale == true)
+                {
+                    count += cartItem.Item.SalePrice.Value * Convert.ToDecimal(cartItem.Count);
+                }
+                else
+                {
+                    count += cartItem.Item.Price * Convert.ToDecimal(cartItem.Count);
+                }
+            }
+            var shipping = count / 10;
+            var taxes = count / 20;
+            var total = count + shipping + taxes;
             if (ModelState.IsValid)
             {
                 order.CustomerId = user.Id;
                 order.OrderDate = System.DateTime.Now;
                 order.EstimatedDelivery = System.DateTime.Now.AddDays(4);
-                order.SubTotal = ViewBag.CartItemsTotalCost;
+                order.SubTotal = count;
                 order.Shipping = shipping;
                 order.Taxes = taxes;
                 order.FinalTotal = total;
                 db.Orders.Add(order);
                 db.SaveChanges();
 
-                var myCart = db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
-                foreach (var cartItem in myCart)
+                foreach (var cartItem in user.CartItems.ToList())
                 {
                     OrderItem orderItem = new OrderItem();
                     orderItem.OrderId = order.Id;
@@ -102,7 +112,7 @@ namespace ShoppingCartNew.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Details", new { id = order.Id });
+                return RedirectToAction("Details", new { id = order.Id, justOrdered = true });
             }
             var activeCreditCards = user.CreditCards.Where(c => c.Expired.Value == false);
             ViewBag.CreditCardId = new SelectList(activeCreditCards, "Id", "CardNumber",order.CreditCardId);
