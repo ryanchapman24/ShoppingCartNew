@@ -76,7 +76,7 @@ namespace ShoppingCartNew.Controllers
         // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, bool? orderCreate)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             CartItem cartItem = db.CartItems.Find(id);
@@ -86,6 +86,14 @@ namespace ShoppingCartNew.Controllers
             }
             db.CartItems.Remove(cartItem);
             db.SaveChanges();
+            if (orderCreate != null && orderCreate == true)
+            {
+                if (user.CartItems.Count == 0)
+                {
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Create", "Orders");
+            }
             return RedirectToAction("Index");
         }
 
@@ -112,7 +120,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateCart(List<int> quantities)
+        public ActionResult UpdateCart(List<int> quantities, bool? orderCreate)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
 
@@ -125,7 +133,10 @@ namespace ShoppingCartNew.Controllers
                 db.SaveChanges();
                 number++;
             }
-
+            if (orderCreate != null && orderCreate == true)
+            {
+                return RedirectToAction("Create", "Orders");
+            }
             return RedirectToAction("Index");
         }
 

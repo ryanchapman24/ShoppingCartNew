@@ -57,14 +57,15 @@
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+                        <h3 style="color: #ff9016">Payment</h3>
                         <div class="form-group">
                             <label class="control-label col-md-2">Card</label>
                             <div class="col-md-10">
                                 @Html.DropDownList("CreditCardId", null, "", htmlAttributes: new { @class = "form-control", required = "true" })
                             </div>
                         </div>
-
+                        <hr />
+                        <h3 style="color: #ff9016">Shipping</h3>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -135,3 +136,64 @@
         </div>
     </div>
 </section><!--Shopping Cart Close-->
+
+<section class="catalog-grid">
+    @foreach (var item in ViewBag.CartItems)
+    {
+        string uniqueId = item.Id + "-deleteFromCart";
+        using (Html.BeginForm("Delete", "CartItems", new { id = item.Id, orderCreate = true }, FormMethod.Post, new { id = uniqueId }))
+        {
+            @Html.AntiForgeryToken()
+        }
+    }
+    <div class="container">
+        <h2 class="light-weight uppercase" style="color: black">Items in your Cart<input class="btn btn-black pull-right" onclick="javascript:document.getElementById('updateCart').submit()" name="update-cart" value="Update Quantities" style="font-size: 14px"></h2>
+        <hr />
+        <div class="row">
+            @using (Html.BeginForm("UpdateCart", "CartItems", new { orderCreate = true }, FormMethod.Post, new { id = "updateCart", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                foreach (var item in ViewBag.CartItems)
+                {
+                    
+                    <!--Tile-->
+                    <div class="col-lg-3 col-md-4 col-sm-6" style="margin-bottom: 20px">
+                        <a href="javascript:document.getElementById('@item.Id-deleteFromCart').submit()" class="btn btn-block btn-sm btn-black" style="font-size: 12px">Remove</a>
+                        <div class="tile">
+                            <div class="badges">
+                                <span class="sale">QTY: @item.Count</span>
+                            </div>
+                            @if (item.Count > 1)
+                            {
+                                var itemPrice = item.UnitTotal / item.Count;
+
+                                <div class="price-label">$ @item.UnitTotal</div>
+                                <div class="price-label old-price" style="text-decoration:none">$ @itemPrice per</div>
+                            }
+                            else
+                            {
+                                <div class="price-label">$ @item.UnitTotal</div>
+                            }
+                            <a href="@Url.Action("Details", "Items", new { id = item.ItemId })" style="position:relative;overflow: hidden;padding-bottom:100%;">
+                                <img src="@item.Item.MediaURL" alt="" style="position: absolute;max-width: 100%;max-height: 100%;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" />
+                                <span class="tile-overlay"></span>
+                            </a>
+                            <div class="footer" style="height: 150px;max-height: 150px;overflow-y: auto">
+                                <a href="@Url.Action("Details", "Items", new { id = item.ItemId })">@item.Item.Name</a>
+                                <span>@Html.Raw(item.Item.Description)</span>
+                            </div>
+                        </div>
+                        <div class="qnt-count">
+                            <center>
+                                <h6>Quantity</h6>
+                                <a class="incr-btn" href="#">-</a>                             
+                                <input id="@item.Id" name="quantities" class="quantity form-control" type="text" value="@item.Count" style="max-width: 60px">
+                                <a class="incr-btn" href="#">+</a>
+                            </center>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

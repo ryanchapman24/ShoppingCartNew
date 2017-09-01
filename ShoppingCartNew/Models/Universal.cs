@@ -24,18 +24,18 @@ namespace ShoppingCartNew.Models
                 ViewBag.FullName = user.FullName;
 
                 ViewBag.TotalCartItems = user.CartItems.Sum(c => c.Count);
-                ViewBag.CartItems = user.CartItems.ToList();
-                ViewBag.ItemTypes = db.ItemTypes.OrderBy(t => t.TypeName).ToList();
+                ViewBag.CartItems = user.CartItems.OrderBy(c => c.Id).ToList();
+                ViewBag.ItemTypes = db.ItemTypes.Where(t => t.Id < 7).OrderBy(t => t.TypeName).ToList();
                 decimal count = 0;
                 foreach (var cartItem in user.CartItems)
                 {
                     if (cartItem.Item.OnSale == true)
                     {
-                        count += cartItem.Item.SalePrice.Value * Convert.ToDecimal(cartItem.Count);
+                        count += cartItem.Item.SalePrice.Value * cartItem.Count;
                     }
                     else
                     {
-                        count += cartItem.Item.Price * Convert.ToDecimal(cartItem.Count);
+                        count += cartItem.Item.Price * cartItem.Count;
                     }
                 }
                 ViewBag.CartItemsTotalCost = count;
@@ -64,11 +64,10 @@ namespace ShoppingCartNew.Models
                     ViewBag.BiggestSale = biggestSale;
                 }
 
-                base.OnActionExecuted(filterContext);
             }
             else
             {
-                ViewBag.ItemTypes = db.ItemTypes.OrderBy(t => t.TypeName).ToList();
+                ViewBag.ItemTypes = db.ItemTypes.Where(t => t.Id < 7).OrderBy(t => t.TypeName).ToList();
 
                 var latestItems = new List<Item>();
                 var myItems = db.Items.OrderByDescending(i => i.Created).ToList();
@@ -94,6 +93,8 @@ namespace ShoppingCartNew.Models
                     ViewBag.BiggestSale = biggestSale;
                 }
             }
+
+            base.OnActionExecuted(filterContext);
         }
     }
 }

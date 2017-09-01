@@ -11,7 +11,7 @@ namespace ShoppingCartNew.Controllers
     {
         public ActionResult Index()
         {
-            return View(db.Items.ToList());
+            return View(db.Items.Where(i => i.Deleted == false).ToList());
         }
 
         public ActionResult About()

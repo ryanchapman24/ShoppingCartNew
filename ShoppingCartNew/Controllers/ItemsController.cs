@@ -148,7 +148,7 @@ namespace ShoppingCartNew.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice,ItemTypeId")] Item item, string mediaURL, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Name,Price,MediaURL,Description,OnSale,SalePrice,ItemTypeId,Deleted")] Item item, string mediaURL, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -191,6 +191,10 @@ namespace ShoppingCartNew.Controllers
                     item.OnSale = false;
                 }
                 db.SaveChanges();
+                if (item.Deleted == true)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "TypeName", item.ItemTypeId);

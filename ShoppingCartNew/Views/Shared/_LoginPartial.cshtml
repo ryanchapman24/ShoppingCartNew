@@ -10,35 +10,37 @@
         <div class="cart-btn">
             <a class="btn btn-outlined-invert" href="@Url.Action("Index", "CartItems")">@if (ViewBag.CartItems.Count > 0){<i class="icon-shopping-cart-content"></i>}else{<i class="icon-shopping-cart"></i>}<span>@ViewBag.TotalCartItems</span><b>$ @ViewBag.CartItemsTotalCost</b></a>
             <!--Cart Dropdown-->
-            <div class="cart-dropdown">
-                <span></span><!--Small rectangle to overlap Cart button-->
-                <div class="body">
-                    <table>
-                        <tr>
-                            <th>Items</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                        </tr>
-                        @foreach (var item in ViewBag.CartItems)
-                        {
-                            <tr class="item">
-                                <td><div class=""></div><a style="margin-left: 20px" href='@Url.Action("Details","Items", new { id = item.Item.Id })'>@item.Item.Name</a></td>
-                                <td><input type="text" value="@item.Count"></td>
-                                <td class="price">$ @item.UnitTotal</td>
+            @if (ViewBag.CartItems.Count > 0)
+            {
+                <div class="cart-dropdown">
+                    <span></span><!--Small rectangle to overlap Cart button-->
+                    <div class="body">
+                        <table>
+                            <tr>
+                                <th>Items</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
                             </tr>
-                        }
-                    </table>
-                </div>
-                <div class="footer group">
-                    <div class="buttons">
-                        <a class="btn btn-outlined-invert" href="checkout.html"><i class="icon-download"></i>Checkout</a>
-                        <a class="btn btn-outlined-invert" href="shopping-cart.html"><i class="icon-shopping-cart-content"></i>To cart</a>
+                            @foreach (var item in ViewBag.CartItems)
+                            {
+                                <tr class="item">
+                                    <td><div class=""></div><a style="margin-left: 20px" href='@Url.Action("Details","Items", new { id = item.Item.Id })'>@item.Item.Name</a></td>
+                                    <td><input type="text" value="@item.Count"></td>
+                                    <td class="price">$ @item.UnitTotal</td>
+                                </tr>
+                            }
+                        </table>
                     </div>
-                    <div class="total">$ @ViewBag.CartItemsTotalCost</div>
-                </div>
-            </div><!--Cart Dropdown Close-->
+                    <div class="footer group">
+                        <div class="buttons">
+                            <a class="btn btn-outlined-invert" href="checkout.html"><i class="icon-download"></i>Checkout</a>
+                            <a class="btn btn-outlined-invert" href="shopping-cart.html"><i class="icon-shopping-cart-content"></i>To cart</a>
+                        </div>
+                        <div class="total">$ @ViewBag.CartItemsTotalCost</div>
+                    </div>
+                </div><!--Cart Dropdown Close-->
+            }      
         </div>
-
         <button class="search-btn btn-outlined-invert"><i class="icon-magnifier"></i></button>
         <a class="login-btn btn-outlined-invert" href="javascript:document.getElementById('logoutForm').submit()"><span><b>L</b>ogoff</span></a>
     </div>
