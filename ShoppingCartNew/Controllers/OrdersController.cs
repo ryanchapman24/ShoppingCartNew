@@ -15,6 +15,12 @@ namespace ShoppingCartNew.Controllers
     [Authorize]
     public class OrdersController : Universal
     {
+        public class Card
+        {
+            public int Id { get; set; }
+            public string TypePlusNumber { get; set; }
+        }
+
         // GET: Orders/Details/5
         public ActionResult Details(int? id, bool? justOrdered)
         {
@@ -49,9 +55,17 @@ namespace ShoppingCartNew.Controllers
             {
                 return RedirectToAction("Index", "Manage", new { oC = true });
             }
-            var activeCreditCards = user.CreditCards.Where(c => c.Expired.Value == false);
+            var cards = new List<Card>();
+            foreach (var card in user.CreditCards.Where(c => c.Expired == false && c.Deleted == false))
+            {
+                var selection = new Card();
+                selection.Id = card.Id;
+                selection.TypePlusNumber = card.CardNumber + " [" + card.CardType.CardName + "]";
+
+                cards.Add(selection);
+            }
             ViewBag.EstimatedDelivery = System.DateTime.Now.AddDays(4);
-            ViewBag.CreditCardId = new SelectList(activeCreditCards, "Id", "CardNumber");
+            ViewBag.CreditCardId = new SelectList(cards, "Id", "TypePlusNumber");
             ViewBag.StateId = new SelectList(db.States, "Id", "StateName");
             ViewBag.StateId = new SelectList(db.States, "Id", "StateName");
             return View();

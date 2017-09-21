@@ -6,7 +6,7 @@
 
 <section class="catalog-single">
     <div class="container">
-        <h2>Item Details @if (Model.Deleted == true){<span class="pull-right light-weight uppercase" style="color: #ff9016">Not Currently Available</span>}</h2>
+        <h2>Item Details @if (Model.Deleted == true){<span class="pull-right light-weight uppercase animated pulse infinite" style="color: #ff9016">Not Currently Available</span>}</h2>
         <hr /><br />
         <div class="row">
 
@@ -85,7 +85,21 @@
                         }
                         <a href="javascript:document.getElementById('detailsForm').submit()"><div data-content="Items in your shopping cart will stay there until you remove them or submit an order"><i class="icon-shopping-cart-content"></i>Add to Cart</div></a>
                     }
-                    <a href="@Url.Action("Index")"><div><i class="icon-arrow-left"></i>Return to Index</div></a>
+                    @if (Model.Deleted == true)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <a href="@Url.Action("Index", "Admin")"><div><i class="icon-arrow-left"></i>Return to Admin</div></a>
+                        }
+                        else
+                        {
+                            <a href=""><div><i class="icon-arrow-left"></i>Previous Page</div></a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index")"><div><i class="icon-arrow-left"></i>Return to Index</div></a>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <a href="@Url.Action("Edit", new { id = Model.Id})"><div><span><i class="icon-paper-pen"></i>Edit</span></div></a>

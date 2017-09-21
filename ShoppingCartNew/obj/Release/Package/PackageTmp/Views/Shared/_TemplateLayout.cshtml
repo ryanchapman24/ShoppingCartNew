@@ -90,22 +90,22 @@
 
         <!--Main Menu-->
         <nav class="menu">
-            <div class="container">
+            <div class="container" style="min-height: 72px">
                 <ul class="main">
                     @if (User.IsInRole("Admin"))
                     {
-                        <li class="hide-sm">
-                            <a href="@Url.Action("Index", "Admin")"><span>A</span>dmin</a>
+                        <li class="hide-sm" style="margin-top: 7px">
+                            <a href="@Url.Action("Index", "Admin")">@*<span>A</span>*@<strong>Admin</strong></a>
                         </li>
                     }
-                    <li class="hide-sm">
-                        <a href="@Url.Action("Index", "Home")"><span>H</span>ome</a>
+                    <li class="hide-sm" style="margin-top: 7px">
+                        <a href="@Url.Action("Index", "Home")">@*<span>H</span>*@<strong>Home</strong></a>
                     </li>
-                    <li class="hide-sm">
-                        <a href="@Url.Action("About", "Home")"><span>A</span>bout</a>
+                    <li class="hide-sm" style="margin-top: 7px">
+                        <a href="@Url.Action("About", "Home")">@*<span>A</span>*@<strong>About</strong></a>
                     </li>
-                    <li class="hide-sm">
-                        <a id="contactScroll" href="#"><span>C</span>ontact</a>
+                    <li class="hide-sm" style="margin-top: 7px">
+                        <a id="contactScroll" href="#">@*<span>C</span>*@<strong>Contact</strong></a>
                     </li>
                 </ul>
             </div>
@@ -113,14 +113,13 @@
             <div class="catalog-block">
                 <div class="container">
                     <ul class="catalog" style="text-align:left">
-                        <li class=""><a href="@Url.Action("Index","Items")"><b>CATALOG</b></a></li>
-                        <li class="has-submenu pull-left">
+                        <li class="has-submenu">
                             @if (ViewBag.BiggestSale != null)
                                 {
                                 var priceDiff = ViewBag.BiggestSale.Price - ViewBag.BiggestSale.SalePrice;
                                 var percentOff = Math.Round((priceDiff / ViewBag.BiggestSale.Price) * 100);
 
-                                <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })"><b>BARGAIN</b><i class="fa fa-chevron-down"></i></a>
+                                <a href="@Url.Action("Details","Items", new { id = ViewBag.BiggestSale.Id })" class=""><b>BARGAIN</b><i class="fa fa-chevron-down"></i></a>
                                 <ul class="submenu">
                                     <li style="text-align: center; font-size: 30px; background-color:#e27600"><h1 style="color:white;margin-top: 20px"><b> @percentOff <span style="font-size: 40px">% </span></b> <span style="font-size: 45px"><br />Off !</span></h1></li>
                                     <li class="offer">
@@ -147,9 +146,11 @@
                                 </ul>
                             }
                         </li>
+                        <li class=""><a href="@Url.Action("Index","Items")"><b>CATALOG</b></a></li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li class=""><a href="@Url.Action("Index","CartItems")"><b>CART</b></a></li>
+                            <li class="" style="margin-left: 0px"><a href="@Url.Action("Index","CartItems")"><b>CART</b></a></li>
+                            <li class="hidden-lg hidden-md"><a href="javascript:document.getElementById('logoutForm').submit()"><b>LOGOUT</b></a></li>
                         }
                     </ul>
                 </div>

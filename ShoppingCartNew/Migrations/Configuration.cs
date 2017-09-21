@@ -39,30 +39,6 @@ namespace ShoppingCartNew.Migrations
             }
             var userId = userManager.FindByEmail("rchapman@coderfoundry.com").Id;
             userManager.AddToRole(userId, "Admin");
-
-            //if (!context.Items.Any())
-            //{
-            //    context.Items.AddOrUpdate(x => x.Id, 
-            //        new Item()
-            //        {
-            //            Name = "watch1",
-            //            Description = "some description",
-            //            Created = DateTime.Now,
-            //            Price = 100,
-            //            MediaURL = "~/images/g1.jpg",
-            //            Updated = null
-            //        },
-            //        new Item()
-            //        {
-            //            Name = "watch2",
-            //            Description = "some more description",
-            //            Created = DateTime.Now,
-            //            Price = (decimal)80.95,
-            //            MediaURL = "~/images/g2.jpg",
-            //            Updated = null
-            //        }
-            //    );
-            //}
         }
     }
 }

@@ -61,6 +61,17 @@
                             <th>Total</th>
                         </tr>
                     }
+                    @*@using (Html.BeginForm("Edit", "CartItems", new { id = item.Id }, FormMethod.Post))
+                    {
+                        <input name="Id" type="hidden" value="@item.Id" />
+                        <input name="Created" type="hidden" value="@item.Created" />
+                        <input name="ItemId" type="hidden" value="@item.ItemId" />
+                        <input name="CustomerId" type="hidden" value="@item.CustomerId" />
+
+                        <input name="Count" type="number" value="@item.Count"/>
+                        <button type="Submit" class="btn btn-default">Update</button>
+                    }*@
+
                     <!--Item-->
                     @using (Html.BeginForm("UpdateCart", "CartItems", FormMethod.Post, new { id = "updateCart", enctype = "multipart/form-data" }))
                     {
@@ -81,7 +92,7 @@
                                 }
                                 <td class="qnt-count">
                                     <a class="incr-btn" href="#">-</a>
-                                        <input id="@item.Id" name="quantities" class="quantity form-control" type="text" value="@item.Count">
+                                        <input id="@item.Id" name="quantities" class="quantity form-control" type="text" value="@item.Count" readonly>
                                     <a class="incr-btn" href="#">+</a>
                                 </td>
                                 @if (item.Item.OnSale == true)
