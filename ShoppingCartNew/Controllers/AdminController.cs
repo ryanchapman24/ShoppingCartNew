@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ShoppingCartNew.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize/*(Roles = "Admin")*/]
     public class AdminController : Universal
     {
         // GET: Admin/Index

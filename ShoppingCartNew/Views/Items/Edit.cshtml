@@ -64,13 +64,13 @@
         <div class="form-group" style="margin-bottom: 0px">
             <label class="control-label col-md-2">On Sale?</label>
             <div class="checkbox col-md-10" style="padding-left: 15px">
-                @Html.EditorFor(model => model.OnSale, new { htmlAttributes = new { @id = "sale-checkbox", required = "true" } })
+                @Html.EditorFor(model => model.OnSale, new { htmlAttributes = new { @id = "sale-checkbox" } })
                 @Html.ValidationMessageFor(model => model.OnSale, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div id="sale-price" class="form-group">
-            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Sale Price</label>
             <div class="col-md-6">
                 @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = new { @id = "sale-price-input", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SalePrice, "", new { @class = "text-danger" })

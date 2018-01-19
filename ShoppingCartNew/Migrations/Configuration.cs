@@ -27,17 +27,17 @@ namespace ShoppingCartNew.Migrations
 
             var userManager = new UserManager<ApplicationUser>(
             new UserStore<ApplicationUser>(context));
-            if (!context.Users.Any(u => u.Email == "rchapman@coderfoundry.com"))
+            if (!context.Users.Any(u => u.Email == "chapman.ryansadler@gmail.com"))
             {
                 userManager.Create(new ApplicationUser
                 {
-                    UserName = "rchapman@coderfoundry.com",
-                    Email = "rchapman@coderfoundry.com",
+                    UserName = "chapman.ryansadler@gmail.com",
+                    Email = "chapman.ryansadler@gmail.com",
                     FirstName = "Ryan",
                     LastName = "Chapman",
                 }, "Password1!");
             }
-            var userId = userManager.FindByEmail("rchapman@coderfoundry.com").Id;
+            var userId = userManager.FindByEmail("chapman.ryansadler@gmail.com").Id;
             userManager.AddToRole(userId, "Admin");
         }
     }

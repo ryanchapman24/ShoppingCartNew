@@ -35,7 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -401,6 +401,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ItemImages\04d707cd5452a0c07606266cefc517fd.jpg" />
+    <Content Include="ItemImages\123371.jpg" />
+    <Content Include="ItemImages\720cc07c87d84dc7ebab017974603fd0.jpg" />
+    <Content Include="ItemImages\am_5panelhat_gray_1_web%281%29.png" />
+    <Content Include="ItemImages\BlackTanLeather.Front_60857724-a484-4a9f-9d9b-6a541a6c2efb_1024x1024.jpg" />
+    <Content Include="ItemImages\crooks_and_castles-CORE_LOGO_5_PANEL_CAP-black-1.jpg" />
+    <Content Include="ItemImages\de15106010d494fe72b6a9fcc983b99b.jpg" />
+    <Content Include="ItemImages\fidget spinner.png" />
+    <Content Include="ItemImages\Headshot_Square.png" />
+    <Content Include="ItemImages\hombre-chaquetas-chalecos-blanco-negro-gris-gris-para-y-kobe-mambula-hypermesh-lobo-oscuro-65WQ.jpg" />
+    <Content Include="ItemImages\hwl%281%29.jpg" />
+    <Content Include="ItemImages\Hyde-StripedSlateSapphie-Angle.jpg" />
+    <Content Include="ItemImages\M545A17TUP_BRN.jpg" />
+    <Content Include="ItemImages\Runaway14M.View02_grande.jpg" />
+    <Content Include="ItemImages\Stance-x-Star-Wars-Trooper-2-Socks-2176658_1024x1024%281%29%281%29.jpg" />
+    <Content Include="ItemImages\Voyager03.Front_73199696-4948-48dc-b439-6ec84166ede5_large.jpg" />
+    <Content Include="ItemImages\_11026719%281%29.jpg" />
+    <Content Include="ItemImages\_11026719%282%29.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -777,7 +795,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ItemImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

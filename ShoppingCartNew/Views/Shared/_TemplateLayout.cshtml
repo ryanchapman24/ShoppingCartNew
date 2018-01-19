@@ -92,7 +92,7 @@
         <nav class="menu">
             <div class="container" style="min-height: 72px">
                 <ul class="main">
-                    @if (User.IsInRole("Admin"))
+                    @if (Request.IsAuthenticated)
                     {
                         <li class="hide-sm" style="margin-top: 7px">
                             <a href="@Url.Action("Index", "Admin")">@*<span>A</span>*@<strong>Admin</strong></a>
@@ -228,7 +228,7 @@
                     <div class="info">
                         <a class="logo text-nowrap" href="@Url.Action("Index","Home")" style="text-align: center; margin-bottom: 0px; border-left: 2px solid white"><h1><b style="color: black; font-size: 85px">E</b> <span  style="font-size: 65px">V O L V E</span></h1></a>
                         <blockquote style="border-left: 2px solid white">
-                            <p style="font-size: 12px">E-Commerce has extensively matured in the last decade and it continues to grow fast even today. We are living in exciting times, where digital items are becoming smarter and advanced day after day.</p>
+                            <p style="font-size: 12px">E-Commerce has matured exponentially in the last decade and it continues to grow even faster in today's economy. We are living in exciting times, where shopping electronically is becoming more sophisticated with each passing day.</p>
                             @*<footer>Someone famous in Source Title</footer>*@
                         </blockquote>
                         <div class="social">
@@ -256,17 +256,17 @@
                 <div id="contactDest" class="contacts col-lg-3 col-md-3 col-sm-3">
                     <h2>Contact</h2>
                     <p class="p-style3">
-                        <b>TRIAD CAMPUS</b><br />
-                        1231 Shields Rd., Suite 5<br />
-                        Kernersville, NC 27284<br />
+                        <b>RYAN CHAPMAN</b><br />
+                        (919) 698-2849<br />
+                        Chapman.ryansadler@gmail.com<br />
 
-                        <b>CHARLOTTE CAMPUS</b><br />
+                        @*<b>CHARLOTTE CAMPUS</b><br />
                         8430 University Park Dr., Suite 650<br />
                         Charlotte, NC 28262<br />
 
                         <b>NEW YORK CAMPUS</b><br />
                         33 Irving Place<br />
-                        New York, NY 10003<br />
+                        New York, NY 10003<br />*@
                     </p>
                 </div>
             </div>

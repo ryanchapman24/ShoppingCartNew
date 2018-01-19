@@ -62,7 +62,7 @@
         </div>
 
         <div id="sale-price" class="form-group">
-            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Sale Price</label>
             <div class="col-md-6">
                 @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = new { @id = "sale-price-input", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SalePrice, "", new { @class = "text-danger" })
